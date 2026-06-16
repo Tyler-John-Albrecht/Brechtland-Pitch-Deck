@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brechtland — Growth Presentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --bg-deep:#0a0a14;
+    --bg-card:#0d0d1a;
+    --purple:#7c3aed;
+    --purple-glow:rgba(124,58,237,0.6);
+    --magenta:#e040a0;
+    --magenta-glow:rgba(224,64,160,0.5);
+    --orange:#f97316;
+    --orange-glow:rgba(249,115,22,0.5);
+    --cyan:#06b6d4;
+    --green:#10b981;
+    --green-glow:rgba(16,185,129,0.5);
+    --text-primary:#f0f0f5;
+    --text-secondary:#9ca3af;
+    --text-muted:#6b7280;
+  }
+
+  html,body{
+    height:100%;width:100%;
+    overflow:hidden;
+    background:var(--bg-deep);
+    font-family:'Exo 2',sans-serif;
+    color:var(--text-primary);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body::after{
+    content:'';
+    position:fixed;inset:0;
+    background-image:
+      linear-gradient(rgba(124,58,237,0.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(124,58,237,0.03) 1px,transparent 1px);
+    background-size:60px 60px;
+    pointer-events:none;z-index:0;
+  }
+
+  /* ── PROGRESS BAR ── */
+  .progress{
+    position:fixed;top:0;left:0;height:3px;
+    background:linear-gradient(90deg,var(--purple),var(--magenta));
+    transition:width .4s ease;z-index:200;
+    box-shadow:0 0 12px var(--purple-glow);
+  }
+
+  /* ── BRAND TAG ── */
+  .brand{
+    position:fixed;top:22px;left:36px;
+    font-family:'Orbitron',sans-serif;
+    font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    color:rgba(255,255,255,0.18);z-index:200;
+  }
+
+  /* ── SLIDES ── */
+  .slides{position:fixed;inset:0;z-index:1;}
+
+  .slide{
+    position:absolute;inset:0;
+    display:flex;flex-direction:column;
+    justify-content:center;align-items:flex-start;
+    padding:90px 10% 80px;
+    opacity:0;pointer-events:none;
+    transition:opacity .45s ease;
+    overflow:hidden;
+  }
+  .slide.active{opacity:1;pointer-events:all;}
+
+  /* Ghost number */
+  .slide::before{
+    content:attr(data-num);
+    position:absolute;
+    font-family:'Orbitron',sans-serif;
+    font-size:380px;font-weight:900;
+    color:rgba(124,58,237,0.032);
+    right:-20px;bottom:-80px;
+    line-height:1;letter-spacing:-20px;
+    user-select:none;pointer-events:none;
+  }
+
+  /* ── LABELS ── */
+  .label{
+    font-family:'Orbitron',sans-serif;
+    font-size:11px;letter-spacing:4px;text-transform:uppercase;
+    margin-bottom:20px;
+  }
+  .l-orange{color:var(--orange);text-shadow:0 0 20px var(--orange-glow);}
+  .l-purple{color:var(--purple);text-shadow:0 0 20px var(--purple-glow);}
+  .l-green{color:var(--green);}
+  .l-cyan{color:var(--cyan);}
+
+  /* ── HEADLINES ── */
+  .hl{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(26px,4.2vw,56px);
+    font-weight:800;line-height:1.15;
+    margin-bottom:32px;max-width:860px;
+  }
+  .grad-pm{background:linear-gradient(135deg,var(--text-primary) 0%,var(--purple) 50%,var(--magenta) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .grad-og{background:linear-gradient(135deg,var(--text-primary) 0%,var(--orange) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .grad-gc{background:linear-gradient(135deg,var(--text-primary) 0%,var(--green) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+  .sub{
+    font-size:clamp(14px,1.6vw,19px);
+    color:var(--text-secondary);
+    max-width:660px;line-height:1.75;
+    margin-bottom:40px;
+  }
+
+  /* ── PAIN ROWS ── */
+  .pain-rows{display:flex;flex-direction:column;gap:14px;width:100%;max-width:780px;}
+  .pain-row{
+    display:flex;align-items:center;gap:20px;
+    padding:16px 22px;
+    background:rgba(249,115,22,0.055);
+    border:1px solid rgba(249,115,22,0.15);
+    border-radius:12px;
+  }
+  .pain-icon{font-size:22px;flex-shrink:0;}
+  .pain-text{font-size:15px;color:var(--text-secondary);line-height:1.5;}
+  .pain-text strong{color:var(--text-primary);}
+
+  /* ── BIG STAT ── */
+  .big-stat{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(70px,14vw,160px);
+    font-weight:900;line-height:1;
+    margin-bottom:16px;
+    background:linear-gradient(135deg,var(--orange),var(--magenta));
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .stat-hl{
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(18px,2.5vw,34px);font-weight:700;
+    color:var(--text-primary);
+    margin-bottom:20px;max-width:640px;line-height:1.3;
+  }
+
+  /* ── TWO COL ── */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;width:100%;max-width:860px;}
+  .col-card{padding:28px;border-radius:16px;border:1px solid;}
+  .col-card.pu{background:rgba(124,58,237,0.06);border-color:rgba(124,58,237,0.2);}
+  .col-card.gr{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
+  .col-icon{font-size:26px;margin-bottom:12px;}
+  .col-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .col-title.pu{color:var(--purple);}
+  .col-title.gr{color:var(--green);}
+  .col-card p{font-size:14px;color:var(--text-secondary);line-height:1.65;}
+
+  /* ── FEATURE LIST ── */
+  .feat-list{list-style:none;display:flex;flex-direction:column;gap:14px;max-width:700px;}
+  .feat-list li{display:flex;align-items:flex-start;gap:14px;font-size:16px;color:var(--text-secondary);line-height:1.5;}
+  .feat-list li strong{color:var(--text-primary);}
+  .fd{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px;}
+  .fd-pu{background:var(--purple);box-shadow:0 0 8px var(--purple-glow);}
+  .fd-gr{background:var(--green);box-shadow:0 0 8px var(--green-glow);}
+
+  /* ── CAMPAIGN CARDS ── */
+  .cam-wrap{display:flex;gap:18px;width:100%;max-width:920px;}
+  .cam-card{
+    flex:1;padding:24px 20px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:var(--bg-card);
+  }
+  .cam-num{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+  .cam-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;}
+  .cam-desc{font-size:13px;color:var(--text-muted);line-height:1.65;}
+  .cam-card:nth-child(1) .cam-num,.cam-card:nth-child(1) .cam-title{color:var(--purple);}
+  .cam-card:nth-child(2) .cam-num,.cam-card:nth-child(2) .cam-title{color:var(--green);}
+  .cam-card:nth-child(3) .cam-num,.cam-card:nth-child(3) .cam-title{color:var(--orange);}
+
+  /* ── TIMELINE ── */
+  .timeline{display:flex;flex-direction:column;gap:0;max-width:660px;}
+  .t-item{display:flex;gap:18px;align-items:flex-start;}
+  .t-spine{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+  .t-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .t-line{width:2px;flex:1;min-height:24px;background:rgba(255,255,255,0.06);}
+  .t-body{padding-bottom:22px;}
+  .t-when{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+  .t-copy{font-size:15px;color:var(--text-secondary);line-height:1.55;}
+  .t-copy strong{color:var(--text-primary);}
+
+  /* ── PACKAGE PREVIEW ── */
+  .pkg-wrap{display:flex;gap:18px;width:100%;max-width:860px;margin-bottom:28px;}
+  .pkg-card{
+    flex:1;padding:22px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.06);
+    background:var(--bg-card);
+  }
+  .pkg-card.feat{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04);}
+  .pkg-name{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;margin-bottom:8px;}
+  .pkg-price{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:800;margin-bottom:6px;}
+  .pkg-price span{font-size:15px;color:var(--text-muted);}
+  .pkg-desc{font-size:12px;color:var(--text-muted);line-height:1.55;margin-bottom:10px;}
+  .pkg-badge{
+    display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+    padding:3px 10px;border-radius:20px;
+    background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green);
+  }
+
+  /* ── CTA BUTTON ── */
+  .cta-btn{
+    display:inline-block;
+    font-family:'Orbitron',sans-serif;
+    font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    padding:16px 40px;border-radius:10px;
+    text-decoration:none;cursor:pointer;border:none;
+    background:linear-gradient(135deg,var(--green),var(--cyan));
+    color:#fff;
+    box-shadow:0 4px 30px var(--green-glow);
+    transition:all .3s;
+  }
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--green-glow);}
+
+  /* ── NAVIGATION ── */
+  .nav-dots{
+    position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
+    display:flex;gap:8px;z-index:200;
+  }
+  .dot{
+    width:6px;height:6px;border-radius:50%;
+    background:rgba(255,255,255,0.15);
+    cursor:pointer;transition:all .3s;
+  }
+  .dot.on{background:var(--purple);box-shadow:0 0 8px var(--purple-glow);width:20px;border-radius:3px;}
+
+  .nav-btns{
+    position:fixed;bottom:20px;right:36px;
+    display:flex;align-items:center;gap:14px;z-index:200;
+  }
+  .nav-btn{
+    width:42px;height:42px;border-radius:50%;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.1);
+    color:var(--text-secondary);font-size:17px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;transition:all .3s;user-select:none;
+  }
+  .nav-btn:hover{background:rgba(124,58,237,0.15);border-color:var(--purple);color:var(--text-primary);}
+  .counter{
+    font-family:'Orbitron',sans-serif;
+    font-size:11px;letter-spacing:2px;color:var(--text-muted);
+  }
+
+  .key-hint{
+    position:fixed;bottom:28px;left:36px;
+    font-size:11px;color:var(--text-muted);letter-spacing:1px;z-index:200;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+<div class="brand">Brechtland</div>
+
+<div class="slides">
+
+  <!-- 01 · TITLE -->
+  <div class="slide active" data-num="01">
+    <div class="label l-orange">Your Growth Plan</div>
+    <h1 class="hl grad-pm">Let's Turn Your Customer List Into Revenue.</h1>
+    <p class="sub">A professional website that earns trust. Email campaigns that drive reviews, repeat bookings, and referrals — done for you, every single month.</p>
+  </div>
+
+  <!-- 02 · THE PROBLEM -->
+  <div class="slide" data-num="02">
+    <div class="label l-orange">The Problem</div>
+    <h2 class="hl grad-og">Right Now, Bad Reviews Are the Loudest Thing People Find.</h2>
+    <div class="pain-rows">
+      <div class="pain-row">
+        <span class="pain-icon">🔍</span>
+        <div class="pain-text"><strong>Someone sees a bad review and Googles your business</strong> — what they find either closes the deal or kills it before they ever call.</div>
+      </div>
+      <div class="pain-row">
+        <span class="pain-icon">👻</span>
+        <div class="pain-text"><strong>Happy customers don't leave reviews on their own.</strong> Unhappy ones do. Your silent majority is invisible.</div>
+      </div>
+      <div class="pain-row">
+        <span class="pain-icon">💸</span>
+        <div class="pain-text"><strong>Your existing customer list is sitting there doing nothing</strong> — repeat business, referrals, and reviews are walking out the door every month.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 · COST OF INACTION -->
+  <div class="slide" data-num="03">
+    <div class="label l-orange">The Cost of Waiting</div>
+    <div class="big-stat">9 in 10</div>
+    <div class="stat-hl">customers check online reviews before choosing a local business.</div>
+    <p class="sub">Every week without a strategy is another week your competitors — who have a clean website and ask for reviews — are winning jobs that should be yours.</p>
+  </div>
+
+  <!-- 04 · THE FIX -->
+  <div class="slide" data-num="04">
+    <div class="label l-green">The Solution</div>
+    <h2 class="hl grad-gc">Two Parts. One System. Total Coverage.</h2>
+    <div class="two-col">
+      <div class="col-card pu">
+        <div class="col-icon">🌐</div>
+        <div class="col-title pu">Part 1 — Website</div>
+        <p>A professional site that earns trust the second someone lands on it. Live in 7 days. We build it, host it, manage it. You do nothing.</p>
+      </div>
+      <div class="col-card gr">
+        <div class="col-icon">✉️</div>
+        <div class="col-title gr">Part 2 — Email Engine</div>
+        <p>Monthly campaigns to your existing customer list — driving reviews, re-booking past clients, and turning happy customers into referrals on autopilot.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 · WEBSITE -->
+  <div class="slide" data-num="05">
+    <div class="label l-purple">Part 1</div>
+    <h2 class="hl grad-pm">Your Website. Built, Hosted &amp; Managed. Live in 7 Days.</h2>
+    <ul class="feat-list">
+      <li><span class="fd fd-pu"></span><div><strong>Professional design</strong> built around your business — not a generic template</div></li>
+      <li><span class="fd fd-pu"></span><div><strong>Hosting, domain &amp; SSL</strong> — fully managed, nothing for you to touch</div></li>
+      <li><span class="fd fd-pu"></span><div><strong>Lead capture built in</strong> — every visitor has a clear path to contact you</div></li>
+      <li><span class="fd fd-pu"></span><div><strong>Google Business profile setup</strong> — so you show up when people search nearby</div></li>
+      <li><span class="fd fd-pu"></span><div><strong>Unlimited content edits</strong> — need a change? Text us. Done within 24 hours.</div></li>
+    </ul>
+  </div>
+
+  <!-- 06 · EMAIL ENGINE -->
+  <div class="slide" data-num="06">
+    <div class="label l-green">Part 2</div>
+    <h2 class="hl grad-gc">Three Campaigns. Running Every Month. On Autopilot.</h2>
+    <div class="cam-wrap">
+      <div class="cam-card">
+        <div class="cam-num">Campaign 01</div>
+        <div class="cam-title">Review Recovery</div>
+        <div class="cam-desc">Goes to your happiest past clients and asks them to share their experience on Google. Stacks your rating. Buries the negatives.</div>
+      </div>
+      <div class="cam-card">
+        <div class="cam-num">Campaign 02</div>
+        <div class="cam-title">Win-Back</div>
+        <div class="cam-desc">Reaches out to clients who haven't booked in 90+ days with an incentive to come back. Turns a dormant list into live revenue.</div>
+      </div>
+      <div class="cam-card">
+        <div class="cam-num">Campaign 03</div>
+        <div class="cam-title">Referral Engine</div>
+        <div class="cam-desc">Asks your current customers to send you their friends and family. Word-of-mouth, systematized. No ad spend required.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 · 60-DAY OUTCOME -->
+  <div class="slide" data-num="07">
+    <div class="label l-cyan">The Outcome</div>
+    <h2 class="hl grad-pm">What This Looks Like in 60 Days.</h2>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="t-spine">
+          <div class="t-dot" style="background:var(--purple);box-shadow:0 0 8px var(--purple-glow)"></div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-when">Week 1</div>
+          <div class="t-copy"><strong>Your website is live.</strong> Professional, converting visitors into leads 24/7.</div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-spine">
+          <div class="t-dot" style="background:var(--green);box-shadow:0 0 8px var(--green-glow)"></div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-when">Week 2</div>
+          <div class="t-copy"><strong>First email campaign goes out.</strong> Review requests land in your customers' inboxes. Your Google rating starts climbing.</div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-spine">
+          <div class="t-dot" style="background:var(--orange);box-shadow:0 0 8px var(--orange-glow)"></div>
+          <div class="t-line"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-when">Month 1</div>
+          <div class="t-copy"><strong>Win-back and referral campaigns launch.</strong> Past customers are re-booking. Referrals start coming in without you lifting a finger.</div>
+        </div>
+      </div>
+      <div class="t-item">
+        <div class="t-spine">
+          <div class="t-dot" style="background:var(--cyan)"></div>
+        </div>
+        <div class="t-body">
+          <div class="t-when">Month 2</div>
+          <div class="t-copy"><strong>Reviews have compounded.</strong> The bad ones are buried. New leads find a 4.5+ business with a clean website. You close more.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 08 · PACKAGES + CTA -->
+  <div class="slide" data-num="08">
+    <div class="label l-purple">Your Options</div>
+    <h2 class="hl grad-pm">No Setup Fee. No Contracts. Cancel Anytime.</h2>
+    <div class="pkg-wrap">
+      <div class="pkg-card">
+        <div class="pkg-name" style="color:var(--purple)">Starter Bundle</div>
+        <div class="pkg-price" style="color:var(--text-primary)">$179<span>/mo</span></div>
+        <div class="pkg-desc">1 website + Spark email. 2 campaigns/mo. Get the foundation in place and start collecting reviews.</div>
+      </div>
+      <div class="pkg-card feat">
+        <div class="pkg-name" style="color:var(--green)">Growth Bundle</div>
+        <div class="pkg-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
+        <div class="pkg-desc">1 website + Momentum email. All 3 campaigns — review recovery, win-back, and referral — running every month.</div>
+        <span class="pkg-badge">Best Value</span>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name" style="color:var(--cyan)">Full Partnership</div>
+        <div class="pkg-price" style="color:var(--text-primary)">$799<span>/mo</span></div>
+        <div class="pkg-desc">Up to 3 websites + Momentum email across all your businesses. One strategy, one invoice.</div>
+      </div>
+    </div>
+    <a href="https://tyler-john-albrecht.github.io/Growth-Bundles/Growth%20Bundle/brechtland-growth-bundle.html" target="_blank" class="cta-btn">View Full Pricing &amp; Enroll →</a>
+  </div>
+
+</div><!-- /slides -->
+
+<!-- Dots -->
+<div class="nav-dots" id="dots"></div>
+
+<!-- Arrows + counter -->
+<div class="nav-btns">
+  <div class="nav-btn" onclick="go(-1)">←</div>
+  <div class="counter" id="ctr">1 / 8</div>
+  <div class="nav-btn" onclick="go(1)">→</div>
+</div>
+
+<div class="key-hint">← → arrow keys to navigate</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const total  = slides.length;
+  let cur = 0;
+
+  // build dots
+  const dotsEl = document.getElementById('dots');
+  slides.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'dot' + (i===0?' on':'');
+    d.onclick = ()=>goTo(i);
+    dotsEl.appendChild(d);
+  });
+
+  function goTo(n){
+    slides[cur].classList.remove('active');
+    document.querySelectorAll('.dot')[cur].classList.remove('on');
+    cur = Math.max(0,Math.min(total-1,n));
+    slides[cur].classList.add('active');
+    document.querySelectorAll('.dot')[cur].classList.add('on');
+    document.getElementById('ctr').textContent=(cur+1)+' / '+total;
+    document.getElementById('prog').style.width=((cur+1)/total*100)+'%';
+  }
+
+  function go(d){goTo(cur+d);}
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
+    if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(-1);
+  });
+
+  // init bar
+  document.getElementById('prog').style.width=(1/total*100)+'%';
+</script>
+
+</body>
+</html>
