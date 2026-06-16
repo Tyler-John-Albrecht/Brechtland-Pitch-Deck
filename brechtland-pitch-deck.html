@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brechtland — Growth Presentation</title>
+<title>Brechtland — Sales Deck</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -18,6 +18,7 @@
     --orange:#f97316;
     --orange-glow:rgba(249,115,22,0.5);
     --cyan:#06b6d4;
+    --cyan-glow:rgba(6,182,212,0.5);
     --green:#10b981;
     --green-glow:rgba(16,185,129,0.5);
     --text-primary:#f0f0f5;
@@ -33,10 +34,8 @@
     color:var(--text-primary);
     -webkit-font-smoothing:antialiased;
   }
-
   body::after{
-    content:'';
-    position:fixed;inset:0;
+    content:'';position:fixed;inset:0;
     background-image:
       linear-gradient(rgba(124,58,237,0.03) 1px,transparent 1px),
       linear-gradient(90deg,rgba(124,58,237,0.03) 1px,transparent 1px);
@@ -44,264 +43,256 @@
     pointer-events:none;z-index:0;
   }
 
-  /* ── PROGRESS BAR ── */
+  /* ── PROGRESS ── */
   .progress{
-    position:fixed;top:0;left:0;height:3px;
+    position:fixed;top:0;left:0;height:2px;
     background:linear-gradient(90deg,var(--purple),var(--magenta));
-    transition:width .4s ease;z-index:200;
-    box-shadow:0 0 12px var(--purple-glow);
+    transition:width .4s ease;z-index:300;
+    box-shadow:0 0 10px var(--purple-glow);
   }
 
-  /* ── BRAND TAG ── */
+  /* ── TAB BAR ── */
+  .tab-bar{
+    position:fixed;top:2px;left:0;right:0;height:56px;
+    background:rgba(10,10,20,0.97);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(124,58,237,0.1);
+    display:flex;align-items:center;
+    padding:0 28px;
+    z-index:200;
+  }
   .brand{
-    position:fixed;top:22px;left:36px;
     font-family:'Orbitron',sans-serif;
     font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-    color:rgba(255,255,255,0.18);z-index:200;
+    color:rgba(255,255,255,0.18);
+    margin-right:36px;flex-shrink:0;
   }
+  .tabs{display:flex;height:100%;}
+  .tab{
+    font-family:'Orbitron',sans-serif;
+    font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    padding:0 20px;height:100%;
+    background:transparent;border:none;
+    color:var(--text-muted);
+    cursor:pointer;position:relative;
+    transition:color .3s;white-space:nowrap;
+  }
+  .tab::after{
+    content:'';
+    position:absolute;bottom:0;left:14px;right:14px;height:2px;
+    border-radius:2px;
+    transform:scaleX(0);
+    transition:transform .3s ease;
+  }
+  .tab.active::after{transform:scaleX(1);}
+  .tab-bundle::after{background:var(--green);box-shadow:0 0 8px var(--green-glow);}
+  .tab-email::after{background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow);}
+  .tab-website::after{background:var(--orange);box-shadow:0 0 8px var(--orange-glow);}
+  .tab-ai::after{background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);}
+  .tab-bundle.active{color:var(--green);}
+  .tab-email.active{color:var(--magenta);}
+  .tab-website.active{color:var(--orange);}
+  .tab-ai.active{color:var(--cyan);}
+
+  /* ── DECKS ── */
+  .deck{position:fixed;top:58px;left:0;right:0;bottom:0;display:none;z-index:1;}
+  .deck.active{display:block;}
 
   /* ── SLIDES ── */
-  .slides{position:fixed;inset:0;z-index:1;}
-
   .slide{
     position:absolute;inset:0;
     display:flex;flex-direction:column;
     justify-content:center;align-items:flex-start;
-    padding:90px 10% 80px;
+    padding:50px 10% 65px;
     opacity:0;pointer-events:none;
-    transition:opacity .45s ease;
-    overflow:hidden;
+    transition:opacity .4s ease;overflow:hidden;
   }
   .slide.active{opacity:1;pointer-events:all;}
-
-  /* Ghost number */
   .slide::before{
     content:attr(data-num);
     position:absolute;
     font-family:'Orbitron',sans-serif;
-    font-size:380px;font-weight:900;
-    color:rgba(124,58,237,0.032);
-    right:-20px;bottom:-80px;
-    line-height:1;letter-spacing:-20px;
+    font-size:360px;font-weight:900;
+    color:rgba(124,58,237,0.03);
+    right:-20px;bottom:-70px;
+    line-height:1;letter-spacing:-18px;
     user-select:none;pointer-events:none;
   }
 
   /* ── LABELS ── */
-  .label{
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;letter-spacing:4px;text-transform:uppercase;
-    margin-bottom:20px;
-  }
-  .l-orange{color:var(--orange);text-shadow:0 0 20px var(--orange-glow);}
-  .l-purple{color:var(--purple);text-shadow:0 0 20px var(--purple-glow);}
+  .label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:14px;}
   .l-green{color:var(--green);}
+  .l-magenta{color:var(--magenta);text-shadow:0 0 14px var(--magenta-glow);}
+  .l-orange{color:var(--orange);text-shadow:0 0 14px var(--orange-glow);}
   .l-cyan{color:var(--cyan);}
+  .l-purple{color:var(--purple);}
 
-  /* ── HEADLINES ── */
-  .hl{
-    font-family:'Orbitron',sans-serif;
-    font-size:clamp(26px,4.2vw,56px);
-    font-weight:800;line-height:1.15;
-    margin-bottom:32px;max-width:860px;
-  }
+  /* ── HEADINGS ── */
+  .hl{font-family:'Orbitron',sans-serif;font-size:clamp(22px,3.8vw,52px);font-weight:800;line-height:1.15;margin-bottom:24px;max-width:860px;}
   .grad-pm{background:linear-gradient(135deg,var(--text-primary) 0%,var(--purple) 50%,var(--magenta) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .grad-og{background:linear-gradient(135deg,var(--text-primary) 0%,var(--orange) 70%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
   .grad-gc{background:linear-gradient(135deg,var(--text-primary) 0%,var(--green) 50%,var(--cyan) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .grad-mc{background:linear-gradient(135deg,var(--text-primary) 0%,var(--magenta) 60%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .grad-cc{background:linear-gradient(135deg,var(--text-primary) 0%,var(--cyan) 60%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 
-  .sub{
-    font-size:clamp(14px,1.6vw,19px);
-    color:var(--text-secondary);
-    max-width:660px;line-height:1.75;
-    margin-bottom:40px;
-  }
+  .sub{font-size:clamp(13px,1.5vw,17px);color:var(--text-secondary);max-width:640px;line-height:1.75;margin-bottom:32px;}
 
   /* ── PAIN ROWS ── */
-  .pain-rows{display:flex;flex-direction:column;gap:14px;width:100%;max-width:780px;}
-  .pain-row{
-    display:flex;align-items:center;gap:20px;
-    padding:16px 22px;
-    background:rgba(249,115,22,0.055);
-    border:1px solid rgba(249,115,22,0.15);
-    border-radius:12px;
-  }
-  .pain-icon{font-size:22px;flex-shrink:0;}
-  .pain-text{font-size:15px;color:var(--text-secondary);line-height:1.5;}
+  .pain-rows{display:flex;flex-direction:column;gap:11px;width:100%;max-width:760px;}
+  .pain-row{display:flex;align-items:center;gap:16px;padding:13px 18px;background:rgba(249,115,22,0.055);border:1px solid rgba(249,115,22,0.14);border-radius:10px;}
+  .pain-icon{font-size:20px;flex-shrink:0;}
+  .pain-text{font-size:14px;color:var(--text-secondary);line-height:1.5;}
   .pain-text strong{color:var(--text-primary);}
 
-  /* ── BIG STAT ── */
-  .big-stat{
-    font-family:'Orbitron',sans-serif;
-    font-size:clamp(70px,14vw,160px);
-    font-weight:900;line-height:1;
-    margin-bottom:16px;
-    background:linear-gradient(135deg,var(--orange),var(--magenta));
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  }
-  .stat-hl{
-    font-family:'Orbitron',sans-serif;
-    font-size:clamp(18px,2.5vw,34px);font-weight:700;
-    color:var(--text-primary);
-    margin-bottom:20px;max-width:640px;line-height:1.3;
-  }
-
   /* ── TWO COL ── */
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:22px;width:100%;max-width:860px;}
-  .col-card{padding:28px;border-radius:16px;border:1px solid;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:820px;}
+  .col-card{padding:22px;border-radius:14px;border:1px solid;}
   .col-card.pu{background:rgba(124,58,237,0.06);border-color:rgba(124,58,237,0.2);}
   .col-card.gr{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
-  .col-icon{font-size:26px;margin-bottom:12px;}
-  .col-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .col-icon{font-size:22px;margin-bottom:10px;}
+  .col-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
   .col-title.pu{color:var(--purple);}
   .col-title.gr{color:var(--green);}
-  .col-card p{font-size:14px;color:var(--text-secondary);line-height:1.65;}
+  .col-card p{font-size:13px;color:var(--text-secondary);line-height:1.6;}
 
-  /* ── FEATURE LIST ── */
-  .feat-list{list-style:none;display:flex;flex-direction:column;gap:14px;max-width:700px;}
-  .feat-list li{display:flex;align-items:flex-start;gap:14px;font-size:16px;color:var(--text-secondary);line-height:1.5;}
+  /* ── FEAT LIST ── */
+  .feat-list{list-style:none;display:flex;flex-direction:column;gap:11px;max-width:700px;}
+  .feat-list li{display:flex;align-items:flex-start;gap:11px;font-size:14px;color:var(--text-secondary);line-height:1.5;}
   .feat-list li strong{color:var(--text-primary);}
-  .fd{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:7px;}
-  .fd-pu{background:var(--purple);box-shadow:0 0 8px var(--purple-glow);}
-  .fd-gr{background:var(--green);box-shadow:0 0 8px var(--green-glow);}
+  .fd{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+  .fd-pu{background:var(--purple);box-shadow:0 0 6px var(--purple-glow);}
+  .fd-mg{background:var(--magenta);box-shadow:0 0 6px var(--magenta-glow);}
+  .fd-og{background:var(--orange);box-shadow:0 0 6px var(--orange-glow);}
+  .fd-gr{background:var(--green);box-shadow:0 0 6px var(--green-glow);}
+  .fd-cy{background:var(--cyan);box-shadow:0 0 6px var(--cyan-glow);}
 
   /* ── CAMPAIGN CARDS ── */
-  .cam-wrap{display:flex;gap:18px;width:100%;max-width:920px;}
-  .cam-card{
-    flex:1;padding:24px 20px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.06);
-    background:var(--bg-card);
-  }
-  .cam-num{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
-  .cam-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;}
-  .cam-desc{font-size:13px;color:var(--text-muted);line-height:1.65;}
+  .cam-wrap{display:flex;gap:14px;width:100%;max-width:880px;}
+  .cam-card{flex:1;padding:20px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);}
+  .cam-num{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+  .cam-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:7px;}
+  .cam-desc{font-size:12px;color:var(--text-muted);line-height:1.6;}
   .cam-card:nth-child(1) .cam-num,.cam-card:nth-child(1) .cam-title{color:var(--purple);}
   .cam-card:nth-child(2) .cam-num,.cam-card:nth-child(2) .cam-title{color:var(--green);}
   .cam-card:nth-child(3) .cam-num,.cam-card:nth-child(3) .cam-title{color:var(--orange);}
 
   /* ── TIMELINE ── */
-  .timeline{display:flex;flex-direction:column;gap:0;max-width:660px;}
-  .t-item{display:flex;gap:18px;align-items:flex-start;}
+  .timeline{display:flex;flex-direction:column;max-width:620px;}
+  .t-item{display:flex;gap:14px;align-items:flex-start;}
   .t-spine{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
-  .t-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;margin-top:4px;}
-  .t-line{width:2px;flex:1;min-height:24px;background:rgba(255,255,255,0.06);}
-  .t-body{padding-bottom:22px;}
-  .t-when{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
-  .t-copy{font-size:15px;color:var(--text-secondary);line-height:1.55;}
+  .t-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+  .t-line{width:2px;flex:1;min-height:18px;background:rgba(255,255,255,0.06);}
+  .t-body{padding-bottom:16px;}
+  .t-when{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;}
+  .t-copy{font-size:13px;color:var(--text-secondary);line-height:1.5;}
   .t-copy strong{color:var(--text-primary);}
 
-  /* ── PACKAGE PREVIEW ── */
-  .pkg-wrap{display:flex;gap:18px;width:100%;max-width:860px;margin-bottom:28px;}
-  .pkg-card{
-    flex:1;padding:22px;
-    border-radius:14px;
-    border:1px solid rgba(255,255,255,0.06);
-    background:var(--bg-card);
-  }
-  .pkg-card.feat{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.04);}
-  .pkg-name{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;margin-bottom:8px;}
-  .pkg-price{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:800;margin-bottom:6px;}
-  .pkg-price span{font-size:15px;color:var(--text-muted);}
-  .pkg-desc{font-size:12px;color:var(--text-muted);line-height:1.55;margin-bottom:10px;}
-  .pkg-badge{
-    display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-    padding:3px 10px;border-radius:20px;
-    background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green);
-  }
+  /* ── STEPS ── */
+  .steps-row{display:flex;gap:14px;width:100%;max-width:840px;}
+  .step-card{flex:1;padding:20px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);}
+  .step-num{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+  .step-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px;}
+  .step-desc{font-size:12px;color:var(--text-muted);line-height:1.6;}
 
-  /* ── CTA BUTTON ── */
-  .cta-btn{
-    display:inline-block;
-    font-family:'Orbitron',sans-serif;
-    font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-    padding:16px 40px;border-radius:10px;
-    text-decoration:none;cursor:pointer;border:none;
-    background:linear-gradient(135deg,var(--green),var(--cyan));
-    color:#fff;
-    box-shadow:0 4px 30px var(--green-glow);
+  /* ── GUARANTEE ── */
+  .guarantee{background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:26px 30px;max-width:680px;}
+  .guarantee-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:var(--green);margin-bottom:12px;}
+  .guarantee p{font-size:14px;color:var(--text-secondary);line-height:1.7;}
+
+  /* ── PRICE CARDS (compact) ── */
+  .prc-row{display:flex;gap:11px;width:100%;max-width:980px;margin-bottom:20px;}
+  .prc{flex:1;padding:16px 13px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);display:flex;flex-direction:column;}
+  .prc.hi-gr{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.05);}
+  .prc.hi-mg{border-color:rgba(224,64,160,0.3);background:rgba(224,64,160,0.04);}
+  .prc.hi-og{border-color:rgba(249,115,22,0.28);background:rgba(249,115,22,0.04);}
+  .prc.hi-cy{border-color:rgba(6,182,212,0.28);background:rgba(6,182,212,0.04);}
+  .prc-name{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+  .prc-price{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;}
+  .prc-price span{font-size:11px;color:var(--text-muted);}
+  .prc-tag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-bottom:6px;}
+  .prc-desc{font-size:11px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;flex:1;}
+  .prc-btn{
+    display:block;width:100%;text-align:center;margin-top:auto;
+    font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+    padding:9px 0;border-radius:8px;text-decoration:none;cursor:pointer;border:none;transition:all .25s;
+  }
+  .btn-pu{background:transparent;border:1px solid rgba(124,58,237,0.3);color:var(--purple);}
+  .btn-pu:hover{border-color:var(--purple);background:rgba(124,58,237,0.08);}
+  .btn-gr{background:linear-gradient(135deg,var(--green),var(--cyan));color:#fff;box-shadow:0 4px 14px var(--green-glow);}
+  .btn-pm{background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;box-shadow:0 4px 14px var(--purple-glow);}
+  .btn-og-s{background:linear-gradient(135deg,var(--orange),var(--magenta));color:#fff;box-shadow:0 4px 14px var(--orange-glow);}
+  .btn-mg{background:transparent;border:1px solid rgba(224,64,160,0.3);color:var(--magenta);}
+  .btn-mg:hover{border-color:var(--magenta);background:rgba(224,64,160,0.07);}
+  .btn-og{background:transparent;border:1px solid rgba(249,115,22,0.3);color:var(--orange);}
+  .btn-og:hover{border-color:var(--orange);background:rgba(249,115,22,0.07);}
+  .btn-cy{background:transparent;border:1px solid rgba(6,182,212,0.3);color:var(--cyan);}
+  .btn-cy:hover{border-color:var(--cyan);background:rgba(6,182,212,0.07);}
+
+  /* ── AI SINGLE CARD ── */
+  .ai-card{background:rgba(124,58,237,0.07);border:1px solid var(--purple);border-radius:16px;padding:32px 36px;max-width:440px;box-shadow:0 0 40px rgba(124,58,237,0.1);}
+  .ai-eyebrow{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+  .ai-price{font-family:'Orbitron',sans-serif;font-size:52px;font-weight:800;color:var(--text-primary);line-height:1;margin-bottom:4px;}
+  .ai-price span{font-size:16px;color:var(--text-muted);font-weight:400;}
+  .ai-note{font-size:12px;color:var(--text-muted);margin-bottom:20px;}
+  .ai-cta{
+    display:block;width:100%;text-align:center;
+    font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+    padding:14px;border-radius:10px;text-decoration:none;
+    background:linear-gradient(135deg,var(--purple),var(--magenta));
+    color:#fff;box-shadow:0 4px 22px rgba(124,58,237,0.35);
     transition:all .3s;
   }
-  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 8px 40px var(--green-glow);}
+  .ai-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,0.5);}
 
-  /* ── NAVIGATION ── */
-  .nav-dots{
-    position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-    display:flex;gap:8px;z-index:200;
-  }
-  .dot{
-    width:6px;height:6px;border-radius:50%;
-    background:rgba(255,255,255,0.15);
-    cursor:pointer;transition:all .3s;
-  }
-  .dot.on{background:var(--purple);box-shadow:0 0 8px var(--purple-glow);width:20px;border-radius:3px;}
-
-  .nav-btns{
-    position:fixed;bottom:20px;right:36px;
-    display:flex;align-items:center;gap:14px;z-index:200;
-  }
-  .nav-btn{
-    width:42px;height:42px;border-radius:50%;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.1);
-    color:var(--text-secondary);font-size:17px;
-    display:flex;align-items:center;justify-content:center;
-    cursor:pointer;transition:all .3s;user-select:none;
-  }
+  /* ── NAV ── */
+  .nav-dots{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:200;}
+  .dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.15);cursor:pointer;transition:all .3s;}
+  .dot.on{background:var(--purple);box-shadow:0 0 8px var(--purple-glow);width:18px;border-radius:3px;}
+  .nav-btns{position:fixed;bottom:14px;right:28px;display:flex;align-items:center;gap:10px;z-index:200;}
+  .nav-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--text-secondary);font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;user-select:none;}
   .nav-btn:hover{background:rgba(124,58,237,0.15);border-color:var(--purple);color:var(--text-primary);}
-  .counter{
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;letter-spacing:2px;color:var(--text-muted);
-  }
-
-  .key-hint{
-    position:fixed;bottom:28px;left:36px;
-    font-size:11px;color:var(--text-muted);letter-spacing:1px;z-index:200;
-  }
+  .counter{font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--text-muted);}
+  .key-hint{position:fixed;bottom:22px;left:28px;font-size:11px;color:var(--text-muted);letter-spacing:1px;z-index:200;}
 </style>
 </head>
 <body>
 
 <div class="progress" id="prog"></div>
-<div class="brand">Brechtland</div>
 
-<div class="slides">
+<!-- ── TAB BAR ── -->
+<div class="tab-bar">
+  <div class="brand">Brechtland</div>
+  <div class="tabs">
+    <button class="tab tab-bundle active" onclick="switchTab('bundle')">Bundle</button>
+    <button class="tab tab-email"         onclick="switchTab('email')">Email Marketing</button>
+    <button class="tab tab-website"       onclick="switchTab('website')">Website</button>
+    <button class="tab tab-ai"            onclick="switchTab('ai')">AI Receptionist</button>
+  </div>
+</div>
 
-  <!-- 01 · TITLE -->
+
+<!-- ════════════════════════════════
+     DECK 1 — BUNDLE
+════════════════════════════════ -->
+<div class="deck active" id="deck-bundle">
+
   <div class="slide active" data-num="01">
-    <div class="label l-orange">Your Growth Plan</div>
-    <h1 class="hl grad-pm">Let's Turn Your Customer List Into Revenue.</h1>
+    <div class="label l-green">Your Growth Plan</div>
+    <h1 class="hl grad-gc">Get Found. Get Reviews. Get Repeat Business.</h1>
     <p class="sub">A professional website that earns trust. Email campaigns that drive reviews, repeat bookings, and referrals — done for you, every single month.</p>
   </div>
 
-  <!-- 02 · THE PROBLEM -->
   <div class="slide" data-num="02">
     <div class="label l-orange">The Problem</div>
-    <h2 class="hl grad-og">Right Now, Bad Reviews Are the Loudest Thing People Find.</h2>
+    <h2 class="hl grad-og">Bad Reviews Are Loud. Happy Customers Are Silent.</h2>
     <div class="pain-rows">
-      <div class="pain-row">
-        <span class="pain-icon">🔍</span>
-        <div class="pain-text"><strong>Someone sees a bad review and Googles your business</strong> — what they find either closes the deal or kills it before they ever call.</div>
-      </div>
-      <div class="pain-row">
-        <span class="pain-icon">👻</span>
-        <div class="pain-text"><strong>Happy customers don't leave reviews on their own.</strong> Unhappy ones do. Your silent majority is invisible.</div>
-      </div>
-      <div class="pain-row">
-        <span class="pain-icon">💸</span>
-        <div class="pain-text"><strong>Your existing customer list is sitting there doing nothing</strong> — repeat business, referrals, and reviews are walking out the door every month.</div>
-      </div>
+      <div class="pain-row"><span class="pain-icon">🔍</span><div class="pain-text"><strong>Someone sees a bad review and Googles your business</strong> — what they find either closes the deal or kills it before they ever call.</div></div>
+      <div class="pain-row"><span class="pain-icon">👻</span><div class="pain-text"><strong>Happy customers don't leave reviews on their own.</strong> Unhappy ones do. Your silent majority is completely invisible.</div></div>
+      <div class="pain-row"><span class="pain-icon">💸</span><div class="pain-text"><strong>Your existing customer list is doing nothing</strong> — repeat business, referrals, and 5-star reviews are walking out the door every month.</div></div>
     </div>
   </div>
 
-  <!-- 03 · COST OF INACTION -->
   <div class="slide" data-num="03">
-    <div class="label l-orange">The Cost of Waiting</div>
-    <div class="big-stat">9 in 10</div>
-    <div class="stat-hl">customers check online reviews before choosing a local business.</div>
-    <p class="sub">Every week without a strategy is another week your competitors — who have a clean website and ask for reviews — are winning jobs that should be yours.</p>
-  </div>
-
-  <!-- 04 · THE FIX -->
-  <div class="slide" data-num="04">
     <div class="label l-green">The Solution</div>
     <h2 class="hl grad-gc">Two Parts. One System. Total Coverage.</h2>
     <div class="two-col">
@@ -318,161 +309,335 @@
     </div>
   </div>
 
-  <!-- 05 · WEBSITE -->
-  <div class="slide" data-num="05">
-    <div class="label l-purple">Part 1</div>
-    <h2 class="hl grad-pm">Your Website. Built, Hosted &amp; Managed. Live in 7 Days.</h2>
-    <ul class="feat-list">
-      <li><span class="fd fd-pu"></span><div><strong>Professional design</strong> built around your business — not a generic template</div></li>
-      <li><span class="fd fd-pu"></span><div><strong>Hosting, domain &amp; SSL</strong> — fully managed, nothing for you to touch</div></li>
-      <li><span class="fd fd-pu"></span><div><strong>Lead capture built in</strong> — every visitor has a clear path to contact you</div></li>
-      <li><span class="fd fd-pu"></span><div><strong>Google Business profile setup</strong> — so you show up when people search nearby</div></li>
-      <li><span class="fd fd-pu"></span><div><strong>Unlimited content edits</strong> — need a change? Text us. Done within 24 hours.</div></li>
-    </ul>
-  </div>
-
-  <!-- 06 · EMAIL ENGINE -->
-  <div class="slide" data-num="06">
-    <div class="label l-green">Part 2</div>
-    <h2 class="hl grad-gc">Three Campaigns. Running Every Month. On Autopilot.</h2>
-    <div class="cam-wrap">
-      <div class="cam-card">
-        <div class="cam-num">Campaign 01</div>
-        <div class="cam-title">Review Recovery</div>
-        <div class="cam-desc">Goes to your happiest past clients and asks them to share their experience on Google. Stacks your rating. Buries the negatives.</div>
-      </div>
-      <div class="cam-card">
-        <div class="cam-num">Campaign 02</div>
-        <div class="cam-title">Win-Back</div>
-        <div class="cam-desc">Reaches out to clients who haven't booked in 90+ days with an incentive to come back. Turns a dormant list into live revenue.</div>
-      </div>
-      <div class="cam-card">
-        <div class="cam-num">Campaign 03</div>
-        <div class="cam-title">Referral Engine</div>
-        <div class="cam-desc">Asks your current customers to send you their friends and family. Word-of-mouth, systematized. No ad spend required.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 07 · 60-DAY OUTCOME -->
-  <div class="slide" data-num="07">
+  <div class="slide" data-num="04">
     <div class="label l-cyan">The Outcome</div>
     <h2 class="hl grad-pm">What This Looks Like in 60 Days.</h2>
     <div class="timeline">
-      <div class="t-item">
-        <div class="t-spine">
-          <div class="t-dot" style="background:var(--purple);box-shadow:0 0 8px var(--purple-glow)"></div>
-          <div class="t-line"></div>
-        </div>
-        <div class="t-body">
-          <div class="t-when">Week 1</div>
-          <div class="t-copy"><strong>Your website is live.</strong> Professional, converting visitors into leads 24/7.</div>
-        </div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--purple);box-shadow:0 0 7px var(--purple-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Week 1</div><div class="t-copy"><strong>Website is live.</strong> Professional, converting visitors into leads 24/7.</div></div></div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--green);box-shadow:0 0 7px var(--green-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Week 2</div><div class="t-copy"><strong>First email campaign goes out.</strong> Review requests hit inboxes. Google rating starts climbing.</div></div></div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--orange);box-shadow:0 0 7px var(--orange-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Month 1</div><div class="t-copy"><strong>Win-back and referral campaigns launch.</strong> Past customers re-booking. Referrals coming in without lifting a finger.</div></div></div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--cyan)"></div></div><div class="t-body"><div class="t-when">Month 2</div><div class="t-copy"><strong>Reviews have compounded.</strong> Bad ones buried. New leads find a 4.5+ business with a clean site. You close more.</div></div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="05">
+    <div class="label l-green">Choose Your Bundle</div>
+    <h2 class="hl grad-gc">No Setup Fee. No Contracts. Cancel Anytime.</h2>
+    <div class="prc-row">
+      <div class="prc">
+        <div class="prc-name" style="color:var(--purple)">Starter Bundle</div>
+        <div class="prc-price" style="color:var(--text-primary)">$179<span>/mo</span></div>
+        <div class="prc-desc">1 website + Spark email. 2 campaigns/mo. Build the foundation and start collecting reviews.</div>
+        <a href="https://buy.stripe.com/cNi28t64Q4wK6kPfVT3Ru0i" target="_blank" class="prc-btn btn-pu">Get Started</a>
       </div>
-      <div class="t-item">
-        <div class="t-spine">
-          <div class="t-dot" style="background:var(--green);box-shadow:0 0 8px var(--green-glow)"></div>
-          <div class="t-line"></div>
-        </div>
-        <div class="t-body">
-          <div class="t-when">Week 2</div>
-          <div class="t-copy"><strong>First email campaign goes out.</strong> Review requests land in your customers' inboxes. Your Google rating starts climbing.</div>
-        </div>
+      <div class="prc hi-gr">
+        <div class="prc-name" style="color:var(--green)">Growth Bundle</div>
+        <div class="prc-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
+        <span class="prc-tag" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green);">Best Value</span>
+        <div class="prc-desc">1 website + Momentum email. Review recovery, win-back &amp; referral campaigns all running.</div>
+        <a href="https://buy.stripe.com/6oU28t2SE4wK8sXfVT3Ru0j" target="_blank" class="prc-btn btn-gr">Get Started</a>
       </div>
-      <div class="t-item">
-        <div class="t-spine">
-          <div class="t-dot" style="background:var(--orange);box-shadow:0 0 8px var(--orange-glow)"></div>
-          <div class="t-line"></div>
-        </div>
-        <div class="t-body">
-          <div class="t-when">Month 1</div>
-          <div class="t-copy"><strong>Win-back and referral campaigns launch.</strong> Past customers are re-booking. Referrals start coming in without you lifting a finger.</div>
-        </div>
-      </div>
-      <div class="t-item">
-        <div class="t-spine">
-          <div class="t-dot" style="background:var(--cyan)"></div>
-        </div>
-        <div class="t-body">
-          <div class="t-when">Month 2</div>
-          <div class="t-copy"><strong>Reviews have compounded.</strong> The bad ones are buried. New leads find a 4.5+ business with a clean website. You close more.</div>
-        </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--cyan)">Full Partnership</div>
+        <div class="prc-price" style="color:var(--text-primary)">$799<span>/mo</span></div>
+        <div class="prc-desc">Up to 3 websites + Momentum email across all your businesses. One invoice.</div>
+        <a href="https://buy.stripe.com/dRm9AV1OA6ESeRl6lj3Ru0k" target="_blank" class="prc-btn btn-cy">Get Started</a>
       </div>
     </div>
   </div>
 
-  <!-- 08 · PACKAGES + CTA -->
-  <div class="slide" data-num="08">
-    <div class="label l-purple">Your Options</div>
-    <h2 class="hl grad-pm">No Setup Fee. No Contracts. Cancel Anytime.</h2>
-    <div class="pkg-wrap">
-      <div class="pkg-card">
-        <div class="pkg-name" style="color:var(--purple)">Starter Bundle</div>
-        <div class="pkg-price" style="color:var(--text-primary)">$179<span>/mo</span></div>
-        <div class="pkg-desc">1 website + Spark email. 2 campaigns/mo. Get the foundation in place and start collecting reviews.</div>
-      </div>
-      <div class="pkg-card feat">
-        <div class="pkg-name" style="color:var(--green)">Growth Bundle</div>
-        <div class="pkg-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
-        <div class="pkg-desc">1 website + Momentum email. All 3 campaigns — review recovery, win-back, and referral — running every month.</div>
-        <span class="pkg-badge">Best Value</span>
-      </div>
-      <div class="pkg-card">
-        <div class="pkg-name" style="color:var(--cyan)">Full Partnership</div>
-        <div class="pkg-price" style="color:var(--text-primary)">$799<span>/mo</span></div>
-        <div class="pkg-desc">Up to 3 websites + Momentum email across all your businesses. One strategy, one invoice.</div>
-      </div>
-    </div>
-    <a href="https://tyler-john-albrecht.github.io/Growth-Bundles/Growth%20Bundle/brechtland-growth-bundle.html" target="_blank" class="cta-btn">View Full Pricing &amp; Enroll →</a>
-  </div>
-
-</div><!-- /slides -->
-
-<!-- Dots -->
-<div class="nav-dots" id="dots"></div>
-
-<!-- Arrows + counter -->
-<div class="nav-btns">
-  <div class="nav-btn" onclick="go(-1)">←</div>
-  <div class="counter" id="ctr">1 / 8</div>
-  <div class="nav-btn" onclick="go(1)">→</div>
 </div>
 
+
+<!-- ════════════════════════════════
+     DECK 2 — EMAIL MARKETING
+════════════════════════════════ -->
+<div class="deck" id="deck-email">
+
+  <div class="slide active" data-num="01">
+    <div class="label l-magenta">Email Marketing</div>
+    <h1 class="hl grad-mc">Your Customer List Is Worth Thousands. It's Just Sitting There.</h1>
+    <p class="sub">Done-for-you monthly email campaigns that turn your existing contacts into reviews, repeat bookings, and referrals — without you writing a single word.</p>
+  </div>
+
+  <div class="slide" data-num="02">
+    <div class="label l-orange">The Problem</div>
+    <h2 class="hl grad-og">Most Businesses Leave 30% of Revenue on the Table.</h2>
+    <div class="pain-rows">
+      <div class="pain-row"><span class="pain-icon">📋</span><div class="pain-text"><strong>You've got a list of past customers</strong> who already know, like, and trust you — and you're not talking to them.</div></div>
+      <div class="pain-row"><span class="pain-icon">🔄</span><div class="pain-text"><strong>Repeat business costs 5x less to win than new business.</strong> Your existing list is the highest-ROI asset you own — and it's collecting dust.</div></div>
+      <div class="pain-row"><span class="pain-icon">⭐</span><div class="pain-text"><strong>Your Google rating is being decided by the loudest voices</strong> — not your best customers. One email campaign changes that immediately.</div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="03">
+    <div class="label l-magenta">What We Do</div>
+    <h2 class="hl grad-mc">Three Campaigns. Every Month. Zero Work From You.</h2>
+    <div class="cam-wrap">
+      <div class="cam-card"><div class="cam-num">Campaign 01</div><div class="cam-title">Review Recovery</div><div class="cam-desc">Reaches your happiest past customers and asks them to share their experience on Google. Stacks your rating. Buries the negatives.</div></div>
+      <div class="cam-card"><div class="cam-num">Campaign 02</div><div class="cam-title">Win-Back</div><div class="cam-desc">Reactivates clients who haven't booked in 90+ days with an incentive to come back. Turns a dormant list into live revenue.</div></div>
+      <div class="cam-card"><div class="cam-num">Campaign 03</div><div class="cam-title">Referral Engine</div><div class="cam-desc">Asks current customers to send friends and family your way. Word-of-mouth, systematized. No ad spend required.</div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="04">
+    <div class="label l-magenta">The Results</div>
+    <h2 class="hl grad-mc">What Happens in the First 60 Days.</h2>
+    <div class="timeline">
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--magenta);box-shadow:0 0 7px var(--magenta-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Week 2</div><div class="t-copy"><strong>First campaign goes out.</strong> Review requests land. Your Google rating starts climbing immediately.</div></div></div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--green);box-shadow:0 0 7px var(--green-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Month 1</div><div class="t-copy"><strong>Win-back campaign launches.</strong> Past clients who went quiet start rebooking. Revenue from customers you already paid to acquire.</div></div></div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--orange);box-shadow:0 0 7px var(--orange-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Month 1–2</div><div class="t-copy"><strong>Referral campaign activates.</strong> Happy customers start sending friends. Organic growth with zero ad spend.</div></div></div>
+      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--purple);box-shadow:0 0 7px var(--purple-glow)"></div></div><div class="t-body"><div class="t-when">Month 2+</div><div class="t-copy"><strong>Compounding effect kicks in.</strong> Reviews, referrals, and repeat bookings running on autopilot. You just run your business.</div></div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="05">
+    <div class="label l-magenta">Choose Your Tier</div>
+    <h2 class="hl grad-mc">Start Small. Scale When Ready. Cancel Anytime.</h2>
+    <div class="prc-row">
+      <div class="prc">
+        <div class="prc-name" style="color:var(--purple)">Spark</div>
+        <div class="prc-price" style="color:var(--text-primary)">$79<span>/mo</span></div>
+        <div class="prc-desc">2 campaigns/mo · 500 contacts · Welcome automation · Monthly snapshot</div>
+        <a href="https://buy.stripe.com/8x2cN764Q7IW10v4db3Ru05" target="_blank" class="prc-btn btn-pu">Get Started</a>
+      </div>
+      <div class="prc hi-mg">
+        <div class="prc-name" style="color:var(--magenta)">Momentum</div>
+        <div class="prc-price" style="color:var(--text-primary)">$149<span>/mo</span></div>
+        <span class="prc-tag" style="background:rgba(224,64,160,0.1);border:1px solid rgba(224,64,160,0.3);color:var(--magenta);">Most Popular</span>
+        <div class="prc-desc">4 campaigns/mo · 2,500 contacts · Review + win-back automations · Seasonal promos</div>
+        <a href="https://buy.stripe.com/5kQdRb3WI0gu7oT6lj3Ru07" target="_blank" class="prc-btn btn-pm">Get Started</a>
+      </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--orange)">Command</div>
+        <div class="prc-price" style="color:var(--text-primary)">$249<span>/mo</span></div>
+        <div class="prc-desc">8 campaigns/mo · 5,000 contacts · 4 automations · A/B testing · Bi-weekly reports</div>
+        <a href="https://buy.stripe.com/dRm6oJ3WI5AOfVp7pn3Ru09" target="_blank" class="prc-btn btn-og">Get Started</a>
+      </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--cyan)">Apex</div>
+        <div class="prc-price" style="color:var(--text-primary)">$399<span>/mo</span></div>
+        <div class="prc-desc">12 campaigns/mo · 10,000 contacts · Unlimited automations · Dedicated strategist</div>
+        <a href="https://buy.stripe.com/00w00lgJu7IW24zeRP3Ru0b" target="_blank" class="prc-btn btn-cy">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ════════════════════════════════
+     DECK 3 — WEBSITE
+════════════════════════════════ -->
+<div class="deck" id="deck-website">
+
+  <div class="slide active" data-num="01">
+    <div class="label l-orange">Website Design</div>
+    <h1 class="hl grad-og">Your Website. Built, Hosted &amp; Managed.</h1>
+    <p class="sub">A professionally built website that earns trust, captures leads, and works for your business 24/7 — designed, hosted, and maintained for you every month.</p>
+  </div>
+
+  <div class="slide" data-num="02">
+    <div class="label l-orange">The Problem</div>
+    <h2 class="hl grad-og">People Google You Before They Call. What Do They Find?</h2>
+    <div class="pain-rows">
+      <div class="pain-row"><span class="pain-icon">📱</span><div class="pain-text"><strong>No website or an outdated one</strong> tells every potential customer the same thing: "Don't trust this business."</div></div>
+      <div class="pain-row"><span class="pain-icon">🏆</span><div class="pain-text"><strong>Your competitors with clean, professional websites</strong> are winning the customers who would've called you.</div></div>
+      <div class="pain-row"><span class="pain-icon">💬</span><div class="pain-text"><strong>Most DIY websites don't convert.</strong> Looking decent and actually turning visitors into leads are two completely different things.</div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="03">
+    <div class="label l-orange">What's Included</div>
+    <h2 class="hl grad-og">Every Plan Includes Everything Your Business Needs.</h2>
+    <ul class="feat-list">
+      <li><span class="fd fd-og"></span><div><strong>Professional design &amp; setup</strong> — built around your business, not a generic template</div></li>
+      <li><span class="fd fd-og"></span><div><strong>Hosting, domain &amp; SSL</strong> — fully managed, nothing for you to touch</div></li>
+      <li><span class="fd fd-og"></span><div><strong>Lead capture &amp; CRM integration</strong> — every visitor has a clear path to contact you</div></li>
+      <li><span class="fd fd-og"></span><div><strong>Basic SEO + Google Business setup</strong> — so you show up when people search nearby</div></li>
+      <li><span class="fd fd-og"></span><div><strong>Unlimited content edits</strong> — need a change? Text us. Done within 24 hours.</div></li>
+      <li><span class="fd fd-og"></span><div><strong>Priority support</strong> — call or text anytime</div></li>
+    </ul>
+  </div>
+
+  <div class="slide" data-num="04">
+    <div class="label l-orange">Choose Your Plan</div>
+    <h2 class="hl grad-og">Commit Longer, Pay Less. Then $49.99/mo to Keep It Live.</h2>
+    <div class="prc-row">
+      <div class="prc">
+        <div class="prc-name" style="color:var(--purple)">Month-to-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
+        <div class="prc-desc">Full flexibility. Cancel anytime with 30 days notice.</div>
+        <a href="https://buy.stripe.com/6oU3cx3WId3g4cH6lj3Ru03" target="_blank" class="prc-btn btn-pu">Get Started</a>
+      </div>
+      <div class="prc hi-og">
+        <div class="prc-name" style="color:var(--orange)">12-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$299<span>/mo</span></div>
+        <span class="prc-tag" style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);color:var(--orange);">Popular</span>
+        <div class="prc-desc">12 payments, then $49.99/mo hosting only.</div>
+        <a href="https://buy.stripe.com/aFaeVf3WI3sG38D5hf3Ru01" target="_blank" class="prc-btn btn-og-s">Get Started</a>
+      </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--orange)">24-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$199<span>/mo</span></div>
+        <div class="prc-desc">24 payments, then $49.99/mo hosting only.</div>
+        <a href="https://buy.stripe.com/5kQ3cxcte2oCfVp9xv3Ru02" target="_blank" class="prc-btn btn-og">Get Started</a>
+      </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--orange)">36-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$149<span>/mo</span></div>
+        <div class="prc-desc">36 payments, then $49.99/mo hosting only.</div>
+        <a href="https://buy.stripe.com/bJe3cxfFqe7kgZt10Z3Ru00" target="_blank" class="prc-btn btn-og">Get Started</a>
+      </div>
+      <div class="prc hi-cy">
+        <div class="prc-name" style="color:var(--cyan)">Own It</div>
+        <div class="prc-price" style="color:var(--text-primary)">$2,997</div>
+        <div class="prc-desc">One-time. You own everything. Then $49.99/mo hosting.</div>
+        <a href="https://buy.stripe.com/28E9AV64Q7IWeRl9xv3Ru0h" target="_blank" class="prc-btn btn-cy">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ════════════════════════════════
+     DECK 4 — AI RECEPTIONIST
+════════════════════════════════ -->
+<div class="deck" id="deck-ai">
+
+  <div class="slide active" data-num="01">
+    <div class="label l-cyan">AI Receptionist</div>
+    <h1 class="hl grad-cc">Every Missed Call Is a Job You'll Never Get Back.</h1>
+    <p class="sub">A 24/7 AI receptionist that answers every call, qualifies every lead, and books appointments directly to your calendar — while you're out on the job.</p>
+  </div>
+
+  <div class="slide" data-num="02">
+    <div class="label l-orange">The Problem</div>
+    <h2 class="hl grad-og">You Can't Answer the Phone When You're on the Roof.</h2>
+    <div class="pain-rows">
+      <div class="pain-row"><span class="pain-icon">📵</span><div class="pain-text"><strong>The average contractor misses calls every single day.</strong> Those calls go to whoever picks up — and that's your competitor.</div></div>
+      <div class="pain-row"><span class="pain-icon">⏰</span><div class="pain-text"><strong>Speed to lead is everything.</strong> Leads called back within minutes close dramatically more than those called back hours later.</div></div>
+      <div class="pain-row"><span class="pain-icon">🌙</span><div class="pain-text"><strong>Customers call after hours.</strong> Without someone answering at 7pm or 8am, those jobs go to whoever has a 24/7 presence.</div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="03">
+    <div class="label l-cyan">How It Works</div>
+    <h2 class="hl grad-cc">Live in Your Business in 48 Hours. Three Steps.</h2>
+    <div class="steps-row">
+      <div class="step-card"><div class="step-num">Step 01</div><div class="step-title">We Build Your Receptionist</div><div class="step-desc">We configure your AI with your business name, services, hours, and industry. No technical work required from you.</div></div>
+      <div class="step-card"><div class="step-num">Step 02</div><div class="step-title">Connect Your Calendar</div><div class="step-desc">Share your Google Calendar with one click. Every booked appointment shows up automatically — no manual entry.</div></div>
+      <div class="step-card"><div class="step-num">Step 03</div><div class="step-title">Forward Your Calls</div><div class="step-desc">We give you a dedicated number or configure call forwarding on your existing line. Your AI starts answering immediately.</div></div>
+    </div>
+  </div>
+
+  <div class="slide" data-num="04">
+    <div class="label l-cyan">What You Get</div>
+    <h2 class="hl grad-cc">Everything. One Price. No Contracts.</h2>
+    <ul class="feat-list">
+      <li><span class="fd fd-cy"></span><div><strong>24/7 AI call answering</strong> — never miss a lead again, day or night</div></li>
+      <li><span class="fd fd-cy"></span><div><strong>Automatic appointment booking</strong> — jobs go straight to your Google Calendar</div></li>
+      <li><span class="fd fd-cy"></span><div><strong>Lead capture</strong> — full caller details saved, logged, and ready for follow-up</div></li>
+      <li><span class="fd fd-cy"></span><div><strong>Industry-trained AI</strong> — roofing, HVAC, plumbing, electrical, and more</div></li>
+      <li><span class="fd fd-mg"></span><div><strong>Custom business hours &amp; after-hours handling</strong> — works exactly how you configure it</div></li>
+      <li><span class="fd fd-mg"></span><div><strong>Intelligent escalation</strong> — transfers to you when the situation needs a real person</div></li>
+      <li><span class="fd fd-og"></span><div><strong>Full setup done by Brechtland</strong> — live in 48 hours, zero tech work from you</div></li>
+    </ul>
+  </div>
+
+  <div class="slide" data-num="05">
+    <div class="label l-green">The Guarantee</div>
+    <h2 class="hl grad-gc">Doesn't Book a Job in 14 Days? Full Refund.</h2>
+    <div class="guarantee">
+      <div class="guarantee-title">🛡️ The 14-Day Booked-Job Guarantee</div>
+      <p>If your AI Receptionist doesn't book at least one qualified appointment in your first 14 days, we refund 100% of your first month. Keep the setup. Keep the industry script. No questions, no hoops.</p>
+    </div>
+    <p class="sub" style="margin-top:20px;margin-bottom:0;font-size:14px;">The only way this doesn't work is if nobody calls you. And if nobody's calling — that's a different problem we can fix too.</p>
+  </div>
+
+  <div class="slide" data-num="06">
+    <div class="label l-cyan">One Price. Everything Included.</div>
+    <h2 class="hl grad-cc">Your Best Employee. Works 24/7. Never Calls In Sick.</h2>
+    <div class="ai-card">
+      <div class="ai-eyebrow">AI Receptionist — Full Access</div>
+      <div class="ai-price">$497<span>/mo</span></div>
+      <div class="ai-note">No setup fee &nbsp;·&nbsp; No contracts &nbsp;·&nbsp; Cancel anytime</div>
+      <a href="https://buy.stripe.com/4gM00lgJuaV87oTgZX3Ru0e" target="_blank" class="ai-cta">Get Started →</a>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ── SHARED NAV ── -->
+<div class="nav-dots" id="dots"></div>
+<div class="nav-btns">
+  <div class="nav-btn" onclick="go(-1)">←</div>
+  <div class="counter" id="ctr"></div>
+  <div class="nav-btn" onclick="go(1)">→</div>
+</div>
 <div class="key-hint">← → arrow keys to navigate</div>
 
 <script>
-  const slides = document.querySelectorAll('.slide');
-  const total  = slides.length;
-  let cur = 0;
+  const DECKS = {
+    bundle:  {id:'deck-bundle',  slides:[],cur:0},
+    email:   {id:'deck-email',   slides:[],cur:0},
+    website: {id:'deck-website', slides:[],cur:0},
+    ai:      {id:'deck-ai',      slides:[],cur:0}
+  };
+  let active='bundle';
 
-  // build dots
-  const dotsEl = document.getElementById('dots');
-  slides.forEach((_,i)=>{
-    const d = document.createElement('div');
-    d.className = 'dot' + (i===0?' on':'');
-    d.onclick = ()=>goTo(i);
-    dotsEl.appendChild(d);
+  Object.keys(DECKS).forEach(k=>{
+    DECKS[k].el=document.getElementById(DECKS[k].id);
+    DECKS[k].slides=Array.from(DECKS[k].el.querySelectorAll('.slide'));
   });
 
-  function goTo(n){
-    slides[cur].classList.remove('active');
-    document.querySelectorAll('.dot')[cur].classList.remove('on');
-    cur = Math.max(0,Math.min(total-1,n));
-    slides[cur].classList.add('active');
-    document.querySelectorAll('.dot')[cur].classList.add('on');
-    document.getElementById('ctr').textContent=(cur+1)+' / '+total;
-    document.getElementById('prog').style.width=((cur+1)/total*100)+'%';
+  function switchTab(name){
+    // reset & hide old deck
+    DECKS[active].slides.forEach(s=>s.classList.remove('active'));
+    DECKS[active].slides[0].classList.add('active');
+    DECKS[active].cur=0;
+    DECKS[active].el.classList.remove('active');
+    document.querySelector('.tab-'+active).classList.remove('active');
+    // show new deck
+    active=name;
+    DECKS[active].el.classList.add('active');
+    document.querySelector('.tab-'+active).classList.add('active');
+    renderNav();
   }
 
-  function go(d){goTo(cur+d);}
+  function goTo(n){
+    const d=DECKS[active];
+    d.slides[d.cur].classList.remove('active');
+    d.cur=Math.max(0,Math.min(d.slides.length-1,n));
+    d.slides[d.cur].classList.add('active');
+    renderNav();
+  }
+
+  function go(dir){goTo(DECKS[active].cur+dir);}
+
+  function renderNav(){
+    const d=DECKS[active];
+    const total=d.slides.length;
+    const dotsEl=document.getElementById('dots');
+    dotsEl.innerHTML='';
+    d.slides.forEach((_,i)=>{
+      const dot=document.createElement('div');
+      dot.className='dot'+(i===d.cur?' on':'');
+      dot.onclick=()=>goTo(i);
+      dotsEl.appendChild(dot);
+    });
+    document.getElementById('ctr').textContent=(d.cur+1)+' / '+total;
+    document.getElementById('prog').style.width=((d.cur+1)/total*100)+'%';
+  }
 
   document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown') go(1);
-    if(e.key==='ArrowLeft' ||e.key==='ArrowUp')   go(-1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp') go(-1);
   });
 
-  // init bar
-  document.getElementById('prog').style.width=(1/total*100)+'%';
+  renderNav();
 </script>
 
 </body>
