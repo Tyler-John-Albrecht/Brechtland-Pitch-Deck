@@ -26,98 +26,36 @@
     --text-muted:#6b7280;
   }
 
-  html,body{
-    height:100%;width:100%;
-    overflow:hidden;
-    background:var(--bg-deep);
-    font-family:'Exo 2',sans-serif;
-    color:var(--text-primary);
-    -webkit-font-smoothing:antialiased;
-  }
-  body::after{
-    content:'';position:fixed;inset:0;
-    background-image:
-      linear-gradient(rgba(124,58,237,0.03) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(124,58,237,0.03) 1px,transparent 1px);
-    background-size:60px 60px;
-    pointer-events:none;z-index:0;
-  }
+  html,body{height:100%;width:100%;overflow:hidden;background:var(--bg-deep);font-family:'Exo 2',sans-serif;color:var(--text-primary);-webkit-font-smoothing:antialiased;}
+  body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,58,237,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0;}
 
   /* ── PROGRESS ── */
-  .progress{
-    position:fixed;top:0;left:0;height:2px;
-    background:linear-gradient(90deg,var(--purple),var(--magenta));
-    transition:width .4s ease;z-index:300;
-    box-shadow:0 0 10px var(--purple-glow);
-  }
+  .progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--magenta));transition:width .4s ease;z-index:300;box-shadow:0 0 10px var(--purple-glow);}
 
   /* ── TAB BAR ── */
-  .tab-bar{
-    position:fixed;top:2px;left:0;right:0;height:56px;
-    background:rgba(10,10,20,0.97);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid rgba(124,58,237,0.1);
-    display:flex;align-items:center;
-    padding:0 28px;
-    z-index:200;
-  }
-  .brand{
-    font-family:'Orbitron',sans-serif;
-    font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-    color:rgba(255,255,255,0.18);
-    margin-right:36px;flex-shrink:0;
-  }
+  .tab-bar{position:fixed;top:2px;left:0;right:0;height:56px;background:rgba(10,10,20,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(124,58,237,0.1);display:flex;align-items:center;padding:0 28px;z-index:200;}
+  .brand{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.18);margin-right:36px;flex-shrink:0;}
   .tabs{display:flex;height:100%;}
-  .tab{
-    font-family:'Orbitron',sans-serif;
-    font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-    padding:0 20px;height:100%;
-    background:transparent;border:none;
-    color:var(--text-muted);
-    cursor:pointer;position:relative;
-    transition:color .3s;white-space:nowrap;
-  }
-  .tab::after{
-    content:'';
-    position:absolute;bottom:0;left:14px;right:14px;height:2px;
-    border-radius:2px;
-    transform:scaleX(0);
-    transition:transform .3s ease;
-  }
+  .tab{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:0 20px;height:100%;background:transparent;border:none;color:var(--text-muted);cursor:pointer;position:relative;transition:color .3s;white-space:nowrap;}
+  .tab::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;border-radius:2px;transform:scaleX(0);transition:transform .3s ease;}
   .tab.active::after{transform:scaleX(1);}
-  .tab-bundle::after{background:var(--green);box-shadow:0 0 8px var(--green-glow);}
-  .tab-email::after{background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow);}
   .tab-website::after{background:var(--orange);box-shadow:0 0 8px var(--orange-glow);}
+  .tab-email::after{background:var(--magenta);box-shadow:0 0 8px var(--magenta-glow);}
   .tab-ai::after{background:var(--cyan);box-shadow:0 0 8px var(--cyan-glow);}
-  .tab-bundle.active{color:var(--green);}
-  .tab-email.active{color:var(--magenta);}
+  .tab-bundle::after{background:var(--green);box-shadow:0 0 8px var(--green-glow);}
   .tab-website.active{color:var(--orange);}
+  .tab-email.active{color:var(--magenta);}
   .tab-ai.active{color:var(--cyan);}
+  .tab-bundle.active{color:var(--green);}
 
   /* ── DECKS ── */
   .deck{position:fixed;top:58px;left:0;right:0;bottom:0;display:none;z-index:1;}
   .deck.active{display:block;}
 
   /* ── SLIDES ── */
-  .slide{
-    position:absolute;inset:0;
-    display:flex;flex-direction:column;
-    justify-content:center;align-items:flex-start;
-    padding:50px 10% 65px;
-    opacity:0;pointer-events:none;
-    transition:opacity .4s ease;overflow:hidden;
-  }
+  .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:50px 10% 65px;opacity:0;pointer-events:none;transition:opacity .4s ease;overflow:hidden;}
   .slide.active{opacity:1;pointer-events:all;}
-  .slide::before{
-    content:attr(data-num);
-    position:absolute;
-    font-family:'Orbitron',sans-serif;
-    font-size:360px;font-weight:900;
-    color:rgba(124,58,237,0.03);
-    right:-20px;bottom:-70px;
-    line-height:1;letter-spacing:-18px;
-    user-select:none;pointer-events:none;
-  }
+  .slide::before{content:attr(data-num);position:absolute;font-family:'Orbitron',sans-serif;font-size:360px;font-weight:900;color:rgba(124,58,237,0.03);right:-20px;bottom:-70px;line-height:1;letter-spacing:-18px;user-select:none;pointer-events:none;}
 
   /* ── LABELS ── */
   .label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:14px;}
@@ -144,16 +82,18 @@
   .pain-text{font-size:14px;color:var(--text-secondary);line-height:1.5;}
   .pain-text strong{color:var(--text-primary);}
 
-  /* ── TWO COL ── */
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:820px;}
-  .col-card{padding:22px;border-radius:14px;border:1px solid;}
-  .col-card.pu{background:rgba(124,58,237,0.06);border-color:rgba(124,58,237,0.2);}
-  .col-card.gr{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
-  .col-icon{font-size:22px;margin-bottom:10px;}
-  .col-title{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
-  .col-title.pu{color:var(--purple);}
-  .col-title.gr{color:var(--green);}
-  .col-card p{font-size:13px;color:var(--text-secondary);line-height:1.6;}
+  /* ── OUTCOME GRID (vacation slide) ── */
+  .outcome-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;max-width:800px;}
+  .out-card{padding:22px;border-radius:12px;background:rgba(249,115,22,0.05);border:1px solid rgba(249,115,22,0.13);}
+  .out-icon{font-size:22px;margin-bottom:8px;}
+  .out-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--orange);margin-bottom:7px;letter-spacing:.5px;}
+  .out-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;}
+
+  /* ── FAQ CARDS ── */
+  .faq-stack{display:flex;flex-direction:column;gap:11px;max-width:800px;width:100%;}
+  .faq-card{padding:16px 20px;border-radius:11px;background:var(--bg-card);border:1px solid rgba(255,255,255,0.06);}
+  .faq-q{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:7px;}
+  .faq-a{font-size:13px;color:var(--text-secondary);line-height:1.6;}
 
   /* ── FEAT LIST ── */
   .feat-list{list-style:none;display:flex;flex-direction:column;gap:11px;max-width:700px;}
@@ -194,39 +134,60 @@
   .step-title{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px;}
   .step-desc{font-size:12px;color:var(--text-muted);line-height:1.6;}
 
-  /* ── GUARANTEE ── */
-  .guarantee{background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);border-radius:14px;padding:26px 30px;max-width:680px;}
-  .guarantee-title{font-family:'Orbitron',sans-serif;font-size:15px;font-weight:700;color:var(--green);margin-bottom:12px;}
-  .guarantee p{font-size:14px;color:var(--text-secondary);line-height:1.7;}
-
-  /* ── PRICE CARDS (compact) ── */
-  .prc-row{display:flex;gap:11px;width:100%;max-width:980px;margin-bottom:20px;}
-  .prc{flex:1;padding:16px 13px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);display:flex;flex-direction:column;}
-  .prc.hi-gr{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.05);}
-  .prc.hi-mg{border-color:rgba(224,64,160,0.3);background:rgba(224,64,160,0.04);}
+  /* ── WEBSITE PRICING CARDS (with savings) ── */
+  .prc-row{display:flex;gap:10px;width:100%;max-width:980px;margin-bottom:18px;}
+  .prc{flex:1;padding:20px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);display:flex;flex-direction:column;}
   .prc.hi-og{border-color:rgba(249,115,22,0.28);background:rgba(249,115,22,0.04);}
   .prc.hi-cy{border-color:rgba(6,182,212,0.28);background:rgba(6,182,212,0.04);}
-  .prc-name{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
-  .prc-price{font-family:'Orbitron',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px;}
-  .prc-price span{font-size:11px;color:var(--text-muted);}
+  .prc.hi-gr{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.05);}
+  .prc.hi-mg{border-color:rgba(224,64,160,0.3);background:rgba(224,64,160,0.04);}
+  .prc-name{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+  .prc-price{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:800;margin-bottom:3px;}
+  .prc-price span{font-size:13px;color:var(--text-muted);}
+  .prc-total{font-size:11px;color:var(--text-muted);margin-bottom:5px;}
+  .prc-save{display:inline-block;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:20px;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);color:var(--green);margin-bottom:8px;}
   .prc-tag{display:inline-block;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-bottom:6px;}
-  .prc-desc{font-size:11px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;flex:1;}
-  .prc-btn{
-    display:block;width:100%;text-align:center;margin-top:auto;
-    font-family:'Orbitron',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
-    padding:9px 0;border-radius:8px;text-decoration:none;cursor:pointer;border:none;transition:all .25s;
-  }
+  .prc-desc{font-size:12px;color:var(--text-muted);line-height:1.5;margin-bottom:12px;flex:1;}
+  .prc-btn{display:block;width:100%;text-align:center;margin-top:auto;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:11px 0;border-radius:8px;text-decoration:none;cursor:pointer;border:none;transition:all .25s;}
   .btn-pu{background:transparent;border:1px solid rgba(124,58,237,0.3);color:var(--purple);}
   .btn-pu:hover{border-color:var(--purple);background:rgba(124,58,237,0.08);}
-  .btn-gr{background:linear-gradient(135deg,var(--green),var(--cyan));color:#fff;box-shadow:0 4px 14px var(--green-glow);}
-  .btn-pm{background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;box-shadow:0 4px 14px var(--purple-glow);}
   .btn-og-s{background:linear-gradient(135deg,var(--orange),var(--magenta));color:#fff;box-shadow:0 4px 14px var(--orange-glow);}
-  .btn-mg{background:transparent;border:1px solid rgba(224,64,160,0.3);color:var(--magenta);}
-  .btn-mg:hover{border-color:var(--magenta);background:rgba(224,64,160,0.07);}
   .btn-og{background:transparent;border:1px solid rgba(249,115,22,0.3);color:var(--orange);}
   .btn-og:hover{border-color:var(--orange);background:rgba(249,115,22,0.07);}
   .btn-cy{background:transparent;border:1px solid rgba(6,182,212,0.3);color:var(--cyan);}
   .btn-cy:hover{border-color:var(--cyan);background:rgba(6,182,212,0.07);}
+  .btn-gr{background:linear-gradient(135deg,var(--green),var(--cyan));color:#fff;box-shadow:0 4px 14px var(--green-glow);}
+  .btn-pm{background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;box-shadow:0 4px 14px var(--purple-glow);}
+  .btn-mg{background:transparent;border:1px solid rgba(224,64,160,0.3);color:var(--magenta);}
+  .btn-mg:hover{border-color:var(--magenta);background:rgba(224,64,160,0.07);}
+
+  /* ── BUNDLE — STRONGER TOGETHER ── */
+  .strong-wrap{display:flex;align-items:center;gap:16px;width:100%;max-width:900px;margin-bottom:28px;}
+  .strong-card{flex:1;padding:24px;border-radius:14px;border:1px solid;}
+  .strong-card.pu{background:rgba(124,58,237,0.06);border-color:rgba(124,58,237,0.2);}
+  .strong-card.gr{background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2);}
+  .strong-icon{font-size:26px;margin-bottom:10px;}
+  .strong-title{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;margin-bottom:8px;}
+  .strong-title.pu{color:var(--purple);}
+  .strong-title.gr{color:var(--green);}
+  .strong-card p{font-size:13px;color:var(--text-secondary);line-height:1.6;}
+  .strong-op{font-family:'Orbitron',sans-serif;font-size:36px;font-weight:900;color:rgba(255,255,255,0.1);flex-shrink:0;}
+  .strong-result{flex:1.2;padding:24px;border-radius:14px;background:linear-gradient(135deg,rgba(124,58,237,0.08),rgba(16,185,129,0.06));border:1px solid rgba(124,58,237,0.2);}
+  .strong-result-title{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;margin-bottom:10px;background:linear-gradient(135deg,var(--purple),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+  .strong-result p{font-size:13px;color:var(--text-secondary);line-height:1.65;}
+
+  /* ── BUNDLE SAVINGS COMPARE ── */
+  .bsave-cards{display:flex;gap:14px;width:100%;max-width:820px;margin-bottom:24px;}
+  .bsave-card{flex:1;padding:22px 18px;border-radius:14px;border:1px solid rgba(255,255,255,0.06);background:var(--bg-card);}
+  .bsave-card.feat{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.05);}
+  .bsave-name{font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+  .bsave-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .bsave-label{font-size:11px;color:var(--text-muted);}
+  .bsave-val{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;color:var(--text-primary);}
+  .bsave-divider{height:1px;background:rgba(255,255,255,0.05);margin:10px 0;}
+  .bsave-save{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;color:var(--green);}
+  .bsave-save-label{font-size:10px;color:var(--text-muted);margin-top:2px;}
+  .bsave-btn{display:block;width:100%;text-align:center;margin-top:16px;font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:10px 0;border-radius:8px;text-decoration:none;cursor:pointer;border:none;transition:all .25s;}
 
   /* ── AI SINGLE CARD ── */
   .ai-card{background:rgba(124,58,237,0.07);border:1px solid var(--purple);border-radius:16px;padding:32px 36px;max-width:440px;box-shadow:0 0 40px rgba(124,58,237,0.1);}
@@ -234,14 +195,7 @@
   .ai-price{font-family:'Orbitron',sans-serif;font-size:52px;font-weight:800;color:var(--text-primary);line-height:1;margin-bottom:4px;}
   .ai-price span{font-size:16px;color:var(--text-muted);font-weight:400;}
   .ai-note{font-size:12px;color:var(--text-muted);margin-bottom:20px;}
-  .ai-cta{
-    display:block;width:100%;text-align:center;
-    font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
-    padding:14px;border-radius:10px;text-decoration:none;
-    background:linear-gradient(135deg,var(--purple),var(--magenta));
-    color:#fff;box-shadow:0 4px 22px rgba(124,58,237,0.35);
-    transition:all .3s;
-  }
+  .ai-cta{display:block;width:100%;text-align:center;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px;border-radius:10px;text-decoration:none;background:linear-gradient(135deg,var(--purple),var(--magenta));color:#fff;box-shadow:0 4px 22px rgba(124,58,237,0.35);transition:all .3s;}
   .ai-cta:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,58,237,0.5);}
 
   /* ── NAV ── */
@@ -259,94 +213,136 @@
 
 <div class="progress" id="prog"></div>
 
-<!-- ── TAB BAR ── -->
 <div class="tab-bar">
   <div class="brand">Brechtland</div>
   <div class="tabs">
-    <button class="tab tab-bundle active" onclick="switchTab('bundle')">Bundle</button>
-    <button class="tab tab-email"         onclick="switchTab('email')">Email Marketing</button>
-    <button class="tab tab-website"       onclick="switchTab('website')">Website</button>
-    <button class="tab tab-ai"            onclick="switchTab('ai')">AI Receptionist</button>
+    <button class="tab tab-website active" onclick="switchTab('website')">Website</button>
+    <button class="tab tab-email"          onclick="switchTab('email')">Email Marketing</button>
+    <button class="tab tab-ai"             onclick="switchTab('ai')">AI Receptionist</button>
+    <button class="tab tab-bundle"         onclick="switchTab('bundle')">Bundle</button>
   </div>
 </div>
 
 
 <!-- ════════════════════════════════
-     DECK 1 — BUNDLE
+     DECK 1 — WEBSITE
 ════════════════════════════════ -->
-<div class="deck active" id="deck-bundle">
+<div class="deck active" id="deck-website">
 
+  <!-- 01 · TITLE -->
   <div class="slide active" data-num="01">
-    <div class="label l-green">Your Growth Plan</div>
-    <h1 class="hl grad-gc">Get Found. Get Reviews. Get Repeat Business.</h1>
-    <p class="sub">A professional website that earns trust. Email campaigns that drive reviews, repeat bookings, and referrals — done for you, every single month.</p>
+    <div class="label l-orange">Website Design</div>
+    <h1 class="hl grad-og">Right Now, Your Competitors Are Taking Your Customers.</h1>
+    <p class="sub">Every day without a professional website is another day someone Googles your trade, finds a competitor who looks more credible, and hands them the job. We fix that in 7 days.</p>
   </div>
 
+  <!-- 02 · PROBLEM -->
   <div class="slide" data-num="02">
     <div class="label l-orange">The Problem</div>
-    <h2 class="hl grad-og">Bad Reviews Are Loud. Happy Customers Are Silent.</h2>
+    <h2 class="hl grad-og">People Google You Before They Call. What Do They Find?</h2>
     <div class="pain-rows">
-      <div class="pain-row"><span class="pain-icon">🔍</span><div class="pain-text"><strong>Someone sees a bad review and Googles your business</strong> — what they find either closes the deal or kills it before they ever call.</div></div>
-      <div class="pain-row"><span class="pain-icon">👻</span><div class="pain-text"><strong>Happy customers don't leave reviews on their own.</strong> Unhappy ones do. Your silent majority is completely invisible.</div></div>
-      <div class="pain-row"><span class="pain-icon">💸</span><div class="pain-text"><strong>Your existing customer list is doing nothing</strong> — repeat business, referrals, and 5-star reviews are walking out the door every month.</div></div>
+      <div class="pain-row"><span class="pain-icon">📱</span><div class="pain-text"><strong>No website or an outdated one</strong> tells every potential customer the same thing: "Don't trust this business."</div></div>
+      <div class="pain-row"><span class="pain-icon">🏆</span><div class="pain-text"><strong>Your competitors with clean, professional sites</strong> are winning customers who would've called you — just because they showed up better.</div></div>
+      <div class="pain-row"><span class="pain-icon">💬</span><div class="pain-text"><strong>Even referrals Google you to verify.</strong> A bad or missing site kills the deal your happy customer already set up for you.</div></div>
     </div>
   </div>
 
+  <!-- 03 · THE VACATION -->
   <div class="slide" data-num="03">
-    <div class="label l-green">The Solution</div>
-    <h2 class="hl grad-gc">Two Parts. One System. Total Coverage.</h2>
-    <div class="two-col">
-      <div class="col-card pu">
-        <div class="col-icon">🌐</div>
-        <div class="col-title pu">Part 1 — Website</div>
-        <p>A professional site that earns trust the second someone lands on it. Live in 7 days. We build it, host it, manage it. You do nothing.</p>
+    <div class="label l-orange">The Outcome</div>
+    <h2 class="hl grad-og">What Your Business Looks Like 30 Days After Launch.</h2>
+    <div class="outcome-grid">
+      <div class="out-card">
+        <div class="out-icon">📍</div>
+        <div class="out-title">You Show Up on Google</div>
+        <div class="out-desc">When someone searches your trade nearby, you're in the results — not invisible while your competitor gets the call.</div>
       </div>
-      <div class="col-card gr">
-        <div class="col-icon">✉️</div>
-        <div class="col-title gr">Part 2 — Email Engine</div>
-        <p>Monthly campaigns to your existing customer list — driving reviews, re-booking past clients, and turning happy customers into referrals on autopilot.</p>
+      <div class="out-card">
+        <div class="out-icon">🤝</div>
+        <div class="out-title">Every First Impression Wins</div>
+        <div class="out-desc">Referrals, cold callers, ad clicks — they land somewhere professional instead of bouncing straight to the next result.</div>
+      </div>
+      <div class="out-card">
+        <div class="out-icon">📲</div>
+        <div class="out-title">Leads Come In While You Work</div>
+        <div class="out-desc">Contact forms and click-to-call working 24/7. You wake up to inquiries, not missed opportunities.</div>
+      </div>
+      <div class="out-card">
+        <div class="out-icon">💪</div>
+        <div class="out-title">You Win the Comparison</div>
+        <div class="out-desc">When a customer is choosing between you and a competitor, your site closes the deal before you say a single word.</div>
       </div>
     </div>
   </div>
 
+  <!-- 04 · COMMON QUESTIONS -->
   <div class="slide" data-num="04">
-    <div class="label l-cyan">The Outcome</div>
-    <h2 class="hl grad-pm">What This Looks Like in 60 Days.</h2>
-    <div class="timeline">
-      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--purple);box-shadow:0 0 7px var(--purple-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Week 1</div><div class="t-copy"><strong>Website is live.</strong> Professional, converting visitors into leads 24/7.</div></div></div>
-      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--green);box-shadow:0 0 7px var(--green-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Week 2</div><div class="t-copy"><strong>First email campaign goes out.</strong> Review requests hit inboxes. Google rating starts climbing.</div></div></div>
-      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--orange);box-shadow:0 0 7px var(--orange-glow)"></div><div class="t-line"></div></div><div class="t-body"><div class="t-when">Month 1</div><div class="t-copy"><strong>Win-back and referral campaigns launch.</strong> Past customers re-booking. Referrals coming in without lifting a finger.</div></div></div>
-      <div class="t-item"><div class="t-spine"><div class="t-dot" style="background:var(--cyan)"></div></div><div class="t-body"><div class="t-when">Month 2</div><div class="t-copy"><strong>Reviews have compounded.</strong> Bad ones buried. New leads find a 4.5+ business with a clean site. You close more.</div></div></div>
+    <div class="label l-orange">Common Questions</div>
+    <h2 class="hl grad-og">Real Questions. Straight Answers.</h2>
+    <div class="faq-stack">
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--orange)">"I already have a website."</div>
+        <div class="faq-a">Is it ranking on Google? Is it turning visitors into calls? A site that doesn't do both isn't working — it's just a placeholder.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--orange)">"What if I just use Facebook or my Google Business page instead?"</div>
+        <div class="faq-a">Those are great supplements — but they're rented land. The algorithm controls your visibility, and they don't convert like a dedicated website does. Your website is the one asset you fully own and control.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--orange)">"My business runs on referrals — I don't need one."</div>
+        <div class="faq-a">When a referral gets your number, the first thing they do is Google you. What they find either confirms the referral or kills it. You need a site for the referrals you're already getting.</div>
+      </div>
     </div>
   </div>
 
+  <!-- 05 · PRICING WITH SAVINGS -->
   <div class="slide" data-num="05">
-    <div class="label l-green">Choose Your Bundle</div>
-    <h2 class="hl grad-gc">No Setup Fee. No Contracts. Cancel Anytime.</h2>
+    <div class="label l-orange">Choose Your Plan</div>
+    <h2 class="hl grad-og" style="font-size:clamp(28px,4vw,58px);margin-bottom:20px">Commit Longer. Pay Less.</h2>
     <div class="prc-row">
       <div class="prc">
-        <div class="prc-name" style="color:var(--purple)">Starter Bundle</div>
-        <div class="prc-price" style="color:var(--text-primary)">$179<span>/mo</span></div>
-        <div class="prc-desc">1 website + Spark email. 2 campaigns/mo. Build the foundation and start collecting reviews.</div>
-        <a href="https://buy.stripe.com/cNi28t64Q4wK6kPfVT3Ru0i" target="_blank" class="prc-btn btn-pu">Get Started</a>
-      </div>
-      <div class="prc hi-gr">
-        <div class="prc-name" style="color:var(--green)">Growth Bundle</div>
+        <div class="prc-name" style="color:var(--purple)">Month-to-Month</div>
         <div class="prc-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
-        <span class="prc-tag" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green);">Best Value</span>
-        <div class="prc-desc">1 website + Momentum email. Review recovery, win-back &amp; referral campaigns all running.</div>
-        <a href="https://buy.stripe.com/6oU28t2SE4wK8sXfVT3Ru0j" target="_blank" class="prc-btn btn-gr">Get Started</a>
+        <div class="prc-total" style="color:var(--text-muted)">Full flexibility</div>
+        <div class="prc-desc" style="margin-top:6px">Cancel with 30 days notice. No commitment.</div>
+        <a href="https://buy.stripe.com/6oU3cx3WId3g4cH6lj3Ru03" target="_blank" class="prc-btn btn-pu">Get Started</a>
+      </div>
+      <div class="prc hi-og">
+        <div class="prc-name" style="color:var(--orange)">12-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$299<span>/mo</span></div>
+        <div class="prc-total">$3,588 total</div>
+        <span class="prc-save">Save $600 vs month-to-month</span>
+        <div class="prc-desc">Then $49.99/mo hosting only.</div>
+        <a href="https://buy.stripe.com/aFaeVf3WI3sG38D5hf3Ru01" target="_blank" class="prc-btn btn-og-s">Get Started</a>
       </div>
       <div class="prc">
-        <div class="prc-name" style="color:var(--cyan)">Full Partnership</div>
-        <div class="prc-price" style="color:var(--text-primary)">$799<span>/mo</span></div>
-        <div class="prc-desc">Up to 3 websites + Momentum email across all your businesses. One invoice.</div>
-        <a href="https://buy.stripe.com/dRm9AV1OA6ESeRl6lj3Ru0k" target="_blank" class="prc-btn btn-cy">Get Started</a>
+        <div class="prc-name" style="color:var(--orange)">24-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$199<span>/mo</span></div>
+        <div class="prc-total">$4,776 total</div>
+        <span class="prc-save">Save $3,600 vs month-to-month</span>
+        <div class="prc-desc">Then $49.99/mo hosting only.</div>
+        <a href="https://buy.stripe.com/5kQ3cxcte2oCfVp9xv3Ru02" target="_blank" class="prc-btn btn-og">Get Started</a>
+      </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--orange)">36-Month</div>
+        <div class="prc-price" style="color:var(--text-primary)">$149<span>/mo</span></div>
+        <div class="prc-total">$5,364 total</div>
+        <span class="prc-save">Save $7,200 vs month-to-month</span>
+        <div class="prc-desc">Then $49.99/mo hosting only.</div>
+        <a href="https://buy.stripe.com/bJe3cxfFqe7kgZt10Z3Ru00" target="_blank" class="prc-btn btn-og">Get Started</a>
+      </div>
+      <div class="prc hi-cy">
+        <div class="prc-name" style="color:var(--cyan)">Own It</div>
+        <div class="prc-price" style="color:var(--text-primary)">$2,997</div>
+        <div class="prc-total">One-time payment</div>
+        <span class="prc-save">Save $2,367 vs 36-month plan</span>
+        <div class="prc-desc">You own everything. Then $49.99/mo hosting.</div>
+        <a href="https://buy.stripe.com/28E9AV64Q7IWeRl9xv3Ru0h" target="_blank" class="prc-btn btn-cy">Get Started</a>
       </div>
     </div>
   </div>
 
-</div>
+</div><!-- /deck-website -->
 
 
 <!-- ════════════════════════════════
@@ -354,32 +350,36 @@
 ════════════════════════════════ -->
 <div class="deck" id="deck-email">
 
+  <!-- 01 · TITLE -->
   <div class="slide active" data-num="01">
     <div class="label l-magenta">Email Marketing</div>
     <h1 class="hl grad-mc">Your Customer List Is Worth Thousands. It's Just Sitting There.</h1>
     <p class="sub">Done-for-you monthly email campaigns that turn your existing contacts into reviews, repeat bookings, and referrals — without you writing a single word.</p>
   </div>
 
+  <!-- 02 · PROBLEM -->
   <div class="slide" data-num="02">
     <div class="label l-orange">The Problem</div>
     <h2 class="hl grad-og">Most Businesses Leave 30% of Revenue on the Table.</h2>
     <div class="pain-rows">
       <div class="pain-row"><span class="pain-icon">📋</span><div class="pain-text"><strong>You've got a list of past customers</strong> who already know, like, and trust you — and you're not talking to them.</div></div>
-      <div class="pain-row"><span class="pain-icon">🔄</span><div class="pain-text"><strong>Repeat business costs 5x less to win than new business.</strong> Your existing list is the highest-ROI asset you own — and it's collecting dust.</div></div>
+      <div class="pain-row"><span class="pain-icon">🔄</span><div class="pain-text"><strong>Repeat business costs 5x less to win than new business.</strong> Your existing list is the highest-ROI asset you own — collecting dust.</div></div>
       <div class="pain-row"><span class="pain-icon">⭐</span><div class="pain-text"><strong>Your Google rating is being decided by the loudest voices</strong> — not your best customers. One email campaign changes that immediately.</div></div>
     </div>
   </div>
 
+  <!-- 03 · CAMPAIGNS -->
   <div class="slide" data-num="03">
     <div class="label l-magenta">What We Do</div>
     <h2 class="hl grad-mc">Three Campaigns. Every Month. Zero Work From You.</h2>
     <div class="cam-wrap">
       <div class="cam-card"><div class="cam-num">Campaign 01</div><div class="cam-title">Review Recovery</div><div class="cam-desc">Reaches your happiest past customers and asks them to share their experience on Google. Stacks your rating. Buries the negatives.</div></div>
-      <div class="cam-card"><div class="cam-num">Campaign 02</div><div class="cam-title">Win-Back</div><div class="cam-desc">Reactivates clients who haven't booked in 90+ days with an incentive to come back. Turns a dormant list into live revenue.</div></div>
+      <div class="cam-card"><div class="cam-num">Campaign 02</div><div class="cam-title">Win-Back</div><div class="cam-desc">Reactivates clients who haven't booked in 90+ days with an offer to come back. Turns a dormant list into live revenue.</div></div>
       <div class="cam-card"><div class="cam-num">Campaign 03</div><div class="cam-title">Referral Engine</div><div class="cam-desc">Asks current customers to send friends and family your way. Word-of-mouth, systematized. No ad spend required.</div></div>
     </div>
   </div>
 
+  <!-- 04 · RESULTS -->
   <div class="slide" data-num="04">
     <div class="label l-magenta">The Results</div>
     <h2 class="hl grad-mc">What Happens in the First 60 Days.</h2>
@@ -391,7 +391,28 @@
     </div>
   </div>
 
+  <!-- 05 · FAQ -->
   <div class="slide" data-num="05">
+    <div class="label l-magenta">Heard It Before</div>
+    <h2 class="hl grad-mc">Real Questions. Straight Answers.</h2>
+    <div class="faq-stack">
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--magenta)">"I don't really have an email list."</div>
+        <div class="faq-a">You have customer names and numbers from past jobs. That's your list. We help you build it into a proper email list and put it to work immediately.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--magenta)">"People don't open marketing emails."</div>
+        <div class="faq-a">They don't open emails from strangers. They open emails from businesses they've already hired and trust. Your list isn't cold — it's warm relationships waiting to be activated.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--magenta)">"I don't have time to write emails."</div>
+        <div class="faq-a">You don't write anything. We handle copy, design, sending, and reporting. Your only job is cashing in on the customers who come back.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 · PRICING -->
+  <div class="slide" data-num="06">
     <div class="label l-magenta">Choose Your Tier</div>
     <h2 class="hl grad-mc">Start Small. Scale When Ready. Cancel Anytime.</h2>
     <div class="prc-row">
@@ -405,7 +426,7 @@
         <div class="prc-name" style="color:var(--magenta)">Momentum</div>
         <div class="prc-price" style="color:var(--text-primary)">$149<span>/mo</span></div>
         <span class="prc-tag" style="background:rgba(224,64,160,0.1);border:1px solid rgba(224,64,160,0.3);color:var(--magenta);">Most Popular</span>
-        <div class="prc-desc">4 campaigns/mo · 2,500 contacts · Review + win-back automations · Seasonal promos</div>
+        <div class="prc-desc">4 campaigns/mo · 2,500 contacts · Review, win-back &amp; referral automations</div>
         <a href="https://buy.stripe.com/5kQdRb3WI0gu7oT6lj3Ru07" target="_blank" class="prc-btn btn-pm">Get Started</a>
       </div>
       <div class="prc">
@@ -423,115 +444,44 @@
     </div>
   </div>
 
-</div>
+</div><!-- /deck-email -->
 
 
 <!-- ════════════════════════════════
-     DECK 3 — WEBSITE
-════════════════════════════════ -->
-<div class="deck" id="deck-website">
-
-  <div class="slide active" data-num="01">
-    <div class="label l-orange">Website Design</div>
-    <h1 class="hl grad-og">Your Website. Built, Hosted &amp; Managed.</h1>
-    <p class="sub">A professionally built website that earns trust, captures leads, and works for your business 24/7 — designed, hosted, and maintained for you every month.</p>
-  </div>
-
-  <div class="slide" data-num="02">
-    <div class="label l-orange">The Problem</div>
-    <h2 class="hl grad-og">People Google You Before They Call. What Do They Find?</h2>
-    <div class="pain-rows">
-      <div class="pain-row"><span class="pain-icon">📱</span><div class="pain-text"><strong>No website or an outdated one</strong> tells every potential customer the same thing: "Don't trust this business."</div></div>
-      <div class="pain-row"><span class="pain-icon">🏆</span><div class="pain-text"><strong>Your competitors with clean, professional websites</strong> are winning the customers who would've called you.</div></div>
-      <div class="pain-row"><span class="pain-icon">💬</span><div class="pain-text"><strong>Most DIY websites don't convert.</strong> Looking decent and actually turning visitors into leads are two completely different things.</div></div>
-    </div>
-  </div>
-
-  <div class="slide" data-num="03">
-    <div class="label l-orange">What's Included</div>
-    <h2 class="hl grad-og">Every Plan Includes Everything Your Business Needs.</h2>
-    <ul class="feat-list">
-      <li><span class="fd fd-og"></span><div><strong>Professional design &amp; setup</strong> — built around your business, not a generic template</div></li>
-      <li><span class="fd fd-og"></span><div><strong>Hosting, domain &amp; SSL</strong> — fully managed, nothing for you to touch</div></li>
-      <li><span class="fd fd-og"></span><div><strong>Lead capture &amp; CRM integration</strong> — every visitor has a clear path to contact you</div></li>
-      <li><span class="fd fd-og"></span><div><strong>Basic SEO + Google Business setup</strong> — so you show up when people search nearby</div></li>
-      <li><span class="fd fd-og"></span><div><strong>Unlimited content edits</strong> — need a change? Text us. Done within 24 hours.</div></li>
-      <li><span class="fd fd-og"></span><div><strong>Priority support</strong> — call or text anytime</div></li>
-    </ul>
-  </div>
-
-  <div class="slide" data-num="04">
-    <div class="label l-orange">Choose Your Plan</div>
-    <h2 class="hl grad-og">Commit Longer, Pay Less. Then $49.99/mo to Keep It Live.</h2>
-    <div class="prc-row">
-      <div class="prc">
-        <div class="prc-name" style="color:var(--purple)">Month-to-Month</div>
-        <div class="prc-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
-        <div class="prc-desc">Full flexibility. Cancel anytime with 30 days notice.</div>
-        <a href="https://buy.stripe.com/6oU3cx3WId3g4cH6lj3Ru03" target="_blank" class="prc-btn btn-pu">Get Started</a>
-      </div>
-      <div class="prc hi-og">
-        <div class="prc-name" style="color:var(--orange)">12-Month</div>
-        <div class="prc-price" style="color:var(--text-primary)">$299<span>/mo</span></div>
-        <span class="prc-tag" style="background:rgba(249,115,22,0.1);border:1px solid rgba(249,115,22,0.3);color:var(--orange);">Popular</span>
-        <div class="prc-desc">12 payments, then $49.99/mo hosting only.</div>
-        <a href="https://buy.stripe.com/aFaeVf3WI3sG38D5hf3Ru01" target="_blank" class="prc-btn btn-og-s">Get Started</a>
-      </div>
-      <div class="prc">
-        <div class="prc-name" style="color:var(--orange)">24-Month</div>
-        <div class="prc-price" style="color:var(--text-primary)">$199<span>/mo</span></div>
-        <div class="prc-desc">24 payments, then $49.99/mo hosting only.</div>
-        <a href="https://buy.stripe.com/5kQ3cxcte2oCfVp9xv3Ru02" target="_blank" class="prc-btn btn-og">Get Started</a>
-      </div>
-      <div class="prc">
-        <div class="prc-name" style="color:var(--orange)">36-Month</div>
-        <div class="prc-price" style="color:var(--text-primary)">$149<span>/mo</span></div>
-        <div class="prc-desc">36 payments, then $49.99/mo hosting only.</div>
-        <a href="https://buy.stripe.com/bJe3cxfFqe7kgZt10Z3Ru00" target="_blank" class="prc-btn btn-og">Get Started</a>
-      </div>
-      <div class="prc hi-cy">
-        <div class="prc-name" style="color:var(--cyan)">Own It</div>
-        <div class="prc-price" style="color:var(--text-primary)">$2,997</div>
-        <div class="prc-desc">One-time. You own everything. Then $49.99/mo hosting.</div>
-        <a href="https://buy.stripe.com/28E9AV64Q7IWeRl9xv3Ru0h" target="_blank" class="prc-btn btn-cy">Get Started</a>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-
-<!-- ════════════════════════════════
-     DECK 4 — AI RECEPTIONIST
+     DECK 3 — AI RECEPTIONIST
 ════════════════════════════════ -->
 <div class="deck" id="deck-ai">
 
+  <!-- 01 · TITLE -->
   <div class="slide active" data-num="01">
     <div class="label l-cyan">AI Receptionist</div>
     <h1 class="hl grad-cc">Every Missed Call Is a Job You'll Never Get Back.</h1>
     <p class="sub">A 24/7 AI receptionist that answers every call, qualifies every lead, and books appointments directly to your calendar — while you're out on the job.</p>
   </div>
 
+  <!-- 02 · PROBLEM -->
   <div class="slide" data-num="02">
     <div class="label l-orange">The Problem</div>
     <h2 class="hl grad-og">You Can't Answer the Phone When You're on the Roof.</h2>
     <div class="pain-rows">
-      <div class="pain-row"><span class="pain-icon">📵</span><div class="pain-text"><strong>The average contractor misses calls every single day.</strong> Those calls go to whoever picks up — and that's your competitor.</div></div>
-      <div class="pain-row"><span class="pain-icon">⏰</span><div class="pain-text"><strong>Speed to lead is everything.</strong> Leads called back within minutes close dramatically more than those called back hours later.</div></div>
-      <div class="pain-row"><span class="pain-icon">🌙</span><div class="pain-text"><strong>Customers call after hours.</strong> Without someone answering at 7pm or 8am, those jobs go to whoever has a 24/7 presence.</div></div>
+      <div class="pain-row"><span class="pain-icon">📵</span><div class="pain-text"><strong>Contractors miss calls every single day.</strong> Those calls go to whoever picks up — and that's your competitor answering while you're on the job.</div></div>
+      <div class="pain-row"><span class="pain-icon">⏰</span><div class="pain-text"><strong>Speed to lead is everything.</strong> Leads called back quickly close far more than those called back hours later. Every minute counts.</div></div>
+      <div class="pain-row"><span class="pain-icon">🌙</span><div class="pain-text"><strong>Customers call after hours.</strong> Without someone answering at 7pm or 8am, those jobs go to whoever has a 24/7 presence. That's now you.</div></div>
     </div>
   </div>
 
+  <!-- 03 · HOW IT WORKS -->
   <div class="slide" data-num="03">
     <div class="label l-cyan">How It Works</div>
     <h2 class="hl grad-cc">Live in Your Business in 48 Hours. Three Steps.</h2>
     <div class="steps-row">
       <div class="step-card"><div class="step-num">Step 01</div><div class="step-title">We Build Your Receptionist</div><div class="step-desc">We configure your AI with your business name, services, hours, and industry. No technical work required from you.</div></div>
       <div class="step-card"><div class="step-num">Step 02</div><div class="step-title">Connect Your Calendar</div><div class="step-desc">Share your Google Calendar with one click. Every booked appointment shows up automatically — no manual entry.</div></div>
-      <div class="step-card"><div class="step-num">Step 03</div><div class="step-title">Forward Your Calls</div><div class="step-desc">We give you a dedicated number or configure call forwarding on your existing line. Your AI starts answering immediately.</div></div>
+      <div class="step-card"><div class="step-num">Step 03</div><div class="step-title">Forward Your Calls</div><div class="step-desc">We set up a dedicated number or configure call forwarding on your existing line. Your AI starts answering immediately.</div></div>
     </div>
   </div>
 
+  <!-- 04 · WHAT YOU GET -->
   <div class="slide" data-num="04">
     <div class="label l-cyan">What You Get</div>
     <h2 class="hl grad-cc">Everything. One Price. No Contracts.</h2>
@@ -546,16 +496,27 @@
     </ul>
   </div>
 
+  <!-- 05 · FAQ + GUARANTEE -->
   <div class="slide" data-num="05">
-    <div class="label l-green">The Guarantee</div>
-    <h2 class="hl grad-gc">Doesn't Book a Job in 14 Days? Full Refund.</h2>
-    <div class="guarantee">
-      <div class="guarantee-title">🛡️ The 14-Day Booked-Job Guarantee</div>
-      <p>If your AI Receptionist doesn't book at least one qualified appointment in your first 14 days, we refund 100% of your first month. Keep the setup. Keep the industry script. No questions, no hoops.</p>
+    <div class="label l-cyan">Heard It Before</div>
+    <h2 class="hl grad-cc">Real Questions. Straight Answers.</h2>
+    <div class="faq-stack">
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--cyan)">"Does it sound like a robot?"</div>
+        <div class="faq-a">No. It uses a natural, conversational voice trained on your specific business. Callers regularly don't realize they're talking to an AI.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--cyan)">"I already have voicemail."</div>
+        <div class="faq-a">Most people hang up without leaving a message — they just call the next result on Google. The AI answers, qualifies, and books them before they dial anyone else.</div>
+      </div>
+      <div class="faq-card">
+        <div class="faq-q" style="color:var(--cyan)">"What if it doesn't work for my business?"</div>
+        <div class="faq-a">If your AI Receptionist doesn't book at least one qualified appointment in your first 14 days, we refund 100% of your first month. Keep the setup. Keep the script. No questions.</div>
+      </div>
     </div>
-    <p class="sub" style="margin-top:20px;margin-bottom:0;font-size:14px;">The only way this doesn't work is if nobody calls you. And if nobody's calling — that's a different problem we can fix too.</p>
   </div>
 
+  <!-- 06 · PRICING -->
   <div class="slide" data-num="06">
     <div class="label l-cyan">One Price. Everything Included.</div>
     <h2 class="hl grad-cc">Your Best Employee. Works 24/7. Never Calls In Sick.</h2>
@@ -567,7 +528,101 @@
     </div>
   </div>
 
-</div>
+</div><!-- /deck-ai -->
+
+
+<!-- ════════════════════════════════
+     DECK 4 — BUNDLE (3 slides)
+════════════════════════════════ -->
+<div class="deck" id="deck-bundle">
+
+  <!-- 01 · STRONGER TOGETHER -->
+  <div class="slide active" data-num="01">
+    <div class="label l-green">The Bundle</div>
+    <h1 class="hl grad-gc">Stronger Together. The Two Services That Compound.</h1>
+    <div class="strong-wrap">
+      <div class="strong-card pu">
+        <div class="strong-icon">🌐</div>
+        <div class="strong-title pu">Website</div>
+        <p>Gets you found. Earns trust before they ever call. Converts visitors into leads 24/7.</p>
+      </div>
+      <div class="strong-op">+</div>
+      <div class="strong-card gr">
+        <div class="strong-icon">✉️</div>
+        <div class="strong-title gr">Email Marketing</div>
+        <p>Turns past customers into reviews, referrals, and repeat bookings — on autopilot every month.</p>
+      </div>
+      <div class="strong-op">=</div>
+      <div class="strong-result">
+        <div class="strong-result-title">Compounding Growth Loop</div>
+        <p>More reviews → Higher Google ranking → More traffic to your site → More leads → More clients → More emails → More reviews. The loop runs itself.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 · SAVINGS COMPARISON -->
+  <div class="slide" data-num="02">
+    <div class="label l-green">Bundle Savings</div>
+    <h2 class="hl grad-gc">Pay for Both Separately — or Save Every Month.</h2>
+    <div class="bsave-cards">
+      <div class="bsave-card">
+        <div class="bsave-name" style="color:var(--purple)">Starter Bundle</div>
+        <div class="bsave-row"><span class="bsave-label">Standalone price</span><span class="bsave-val" style="text-decoration:line-through;color:var(--text-muted)">$228/mo</span></div>
+        <div class="bsave-row"><span class="bsave-label">Bundle price</span><span class="bsave-val">$179/mo</span></div>
+        <div class="bsave-divider"></div>
+        <div class="bsave-save">Save $49/mo</div>
+        <div class="bsave-save-label">$588 back in your pocket every year</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:10px">1 website + Spark email</div>
+      </div>
+      <div class="bsave-card feat">
+        <div class="bsave-name" style="color:var(--green)">Growth Bundle ✦ Best Value</div>
+        <div class="bsave-row"><span class="bsave-label">Standalone price</span><span class="bsave-val" style="text-decoration:line-through;color:var(--text-muted)">$448/mo</span></div>
+        <div class="bsave-row"><span class="bsave-label">Bundle price</span><span class="bsave-val">$349/mo</span></div>
+        <div class="bsave-divider"></div>
+        <div class="bsave-save">Save $99/mo</div>
+        <div class="bsave-save-label">$1,188 back in your pocket every year</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:10px">1 website + Momentum email</div>
+      </div>
+      <div class="bsave-card">
+        <div class="bsave-name" style="color:var(--cyan)">Full Partnership</div>
+        <div class="bsave-row"><span class="bsave-label">Standalone price</span><span class="bsave-val" style="text-decoration:line-through;color:var(--text-muted)">$1,046/mo</span></div>
+        <div class="bsave-row"><span class="bsave-label">Bundle price</span><span class="bsave-val">$799/mo</span></div>
+        <div class="bsave-divider"></div>
+        <div class="bsave-save">Save $247/mo</div>
+        <div class="bsave-save-label">$2,964 back in your pocket every year</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:10px">Up to 3 websites + Momentum email</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 · PRICING -->
+  <div class="slide" data-num="03">
+    <div class="label l-green">Choose Your Bundle</div>
+    <h2 class="hl grad-gc">No Setup Fee. No Contracts. Cancel Anytime.</h2>
+    <div class="prc-row" style="max-width:680px">
+      <div class="prc">
+        <div class="prc-name" style="color:var(--purple)">Starter Bundle</div>
+        <div class="prc-price" style="color:var(--text-primary)">$179<span>/mo</span></div>
+        <div class="prc-desc">1 website + Spark email. 2 campaigns/mo. Build the foundation and start collecting reviews.</div>
+        <a href="https://buy.stripe.com/cNi28t64Q4wK6kPfVT3Ru0i" target="_blank" class="prc-btn btn-pu">Get Started</a>
+      </div>
+      <div class="prc hi-gr">
+        <div class="prc-name" style="color:var(--green)">Growth Bundle</div>
+        <div class="prc-price" style="color:var(--text-primary)">$349<span>/mo</span></div>
+        <span class="prc-tag" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:var(--green);">Best Value</span>
+        <div class="prc-desc">1 website + Momentum email. All 3 campaigns running every month.</div>
+        <a href="https://buy.stripe.com/6oU28t2SE4wK8sXfVT3Ru0j" target="_blank" class="prc-btn btn-gr">Get Started</a>
+      </div>
+      <div class="prc">
+        <div class="prc-name" style="color:var(--cyan)">Full Partnership</div>
+        <div class="prc-price" style="color:var(--text-primary)">$799<span>/mo</span></div>
+        <div class="prc-desc">Up to 3 websites + Momentum email across all your businesses. One invoice.</div>
+        <a href="https://buy.stripe.com/dRm9AV1OA6ESeRl6lj3Ru0k" target="_blank" class="prc-btn btn-cy">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck-bundle -->
 
 
 <!-- ── SHARED NAV ── -->
@@ -580,13 +635,13 @@
 <div class="key-hint">← → arrow keys to navigate</div>
 
 <script>
-  const DECKS = {
-    bundle:  {id:'deck-bundle',  slides:[],cur:0},
-    email:   {id:'deck-email',   slides:[],cur:0},
-    website: {id:'deck-website', slides:[],cur:0},
-    ai:      {id:'deck-ai',      slides:[],cur:0}
+  const DECKS={
+    website:{id:'deck-website',slides:[],cur:0},
+    email:  {id:'deck-email',  slides:[],cur:0},
+    ai:     {id:'deck-ai',     slides:[],cur:0},
+    bundle: {id:'deck-bundle', slides:[],cur:0}
   };
-  let active='bundle';
+  let active='website';
 
   Object.keys(DECKS).forEach(k=>{
     DECKS[k].el=document.getElementById(DECKS[k].id);
@@ -594,13 +649,11 @@
   });
 
   function switchTab(name){
-    // reset & hide old deck
     DECKS[active].slides.forEach(s=>s.classList.remove('active'));
     DECKS[active].slides[0].classList.add('active');
     DECKS[active].cur=0;
     DECKS[active].el.classList.remove('active');
     document.querySelector('.tab-'+active).classList.remove('active');
-    // show new deck
     active=name;
     DECKS[active].el.classList.add('active');
     document.querySelector('.tab-'+active).classList.add('active');
